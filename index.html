@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Undangan Pernikahan</title>
+
+  <style>
+    /* --- RESET RINGAN --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      font-family: "Poppins", system-ui, sans-serif;
+      background-color: #f9f7f4;
+      color: #2f2f2f;
+      line-height: 1.6;
+    }
+
+    /* --- SCREEN 1: ENVELOPE GATE --- */
+    .gate-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, #7a6a58 0%, #2a221a 70%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .gate-inner {
+      max-width: 320px;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .gate-greeting {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .envelope-card {
+      background: #fdf7ef;
+      color: #4a4033;
+      border-radius: 1rem;
+      box-shadow: 0 30px 60px rgb(0 0 0 / 60%);
+      padding: 2rem 1.25rem;
+      position: relative;
+      border: 1px solid rgb(255 255 255 / 40%);
+    }
+
+    .envelope-top-fold {
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 70px;
+      background: linear-gradient(#d5c3ac,#b39a7c);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border: 1px solid rgb(255 255 255 / 30%);
+      box-shadow: 0 20px 30px rgb(0 0 0 / 35%);
+    }
+
+    .couple-names {
+      font-family: "Playfair Display", serif;
+      font-size: 1.2rem;
+      color: #4a4033;
+      line-height: 1.4;
+    }
+
+    .wedding-date {
+      font-size: 0.9rem;
+      color: #6a5a4a;
+    }
+
+    .open-btn {
+      background: #4a4033;
+      color: #fff;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.9rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 1rem;
+      width: 100%;
+      box-shadow: 0 20px 30px rgb(0 0 0 / 40%);
+    }
+    .open-btn:active {
+      opacity: 0.8;
+    }
+
+    .gate-note {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    /* saat kita hide gate */
+    .gate-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* --- SCREEN 2: MAIN CONTENT --- */
+    .main-content {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .main-content.visible {
+      opacity: 1;
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ganti URL foto kalian di inline style dari .hero-image-wrapper lewat JS nanti kalau mau */
+    .hero-image-wrapper {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.4);
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 500px;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .hero-label {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .hero-names {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(1.6rem,1vw + 1rem,2rem);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .hero-date {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #fff;
+    }
+
+    /* SECTION WRAPPER */
+    .section {
+      padding: 3rem 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      color: #4a4a4a;
+    }
+
+    .section h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #5a4a3b;
+      margin-bottom: 1rem;
+    }
+
+    .section p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* DETAIL ACARA */
+    .cards {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e4ded4;
+      border-radius: 1rem;
+      padding: 1.25rem 1rem;
+      box-shadow: 0 15px 40px rgb(0 0 0 / 5%);
+      color: #4a4a4a;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #5a4a3b;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+    }
+
+    /* GIFT / HADIAH */
+    .gift-box {
+      background: #fff;
+      border: 1px solid #e4ded4;
+      border-radius: 1rem;
+      padding: 1.5rem 1rem;
+      box-shadow: 0 15px 40px rgb(0 0 0 / 5%);
+      max-width: 400px;
+      margin: 1.5rem auto 0;
+      text-align: center;
+    }
+    .gift-box h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #5a4a3b;
+      margin-bottom: 0.5rem;
+    }
+    .gift-desc {
+      font-size: 0.8rem;
+      color: #6b6b6b;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .rekening {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2f2f2f;
+      background: #f9f7f4;
+      border: 1px solid #c9bbaa;
+      border-radius: 0.75rem;
+      padding: 0.75rem 1rem;
+      word-break: break-word;
+    }
+    .copy-btn {
+      margin-top: 0.75rem;
+      background: #5a4a3b;
+      color: #fff;
+      border: none;
+      border-radius: 0.75rem;
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    /* PENUTUP / FOOTER */
+    .closing-note {
+      font-size: 0.8rem;
+      color: #6b6b6b;
+      line-height: 1.5;
+      margin-top: 1rem;
+    }
+
+    .footer {
+      background: #5a4a3b;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+    }
+
+    @media(min-width:768px){
+      .cards {
+        grid-template-columns: repeat(2,1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== SCREEN 1: ENVELOPE ===================== -->
+  <div class="gate-screen" id="gateScreen">
+    <div class="gate-inner">
+      <div class="gate-greeting">UNDANGAN PERNIKAHAN</div>
+
+      <div class="envelope-card">
+        <div class="envelope-top-fold"></div>
+
+        <div class="couple-names">
+          Bagus &amp; Ayu
+        </div>
+        <div class="wedding-date">
+          Minggu, 21 Desember 2025
+        </div>
+
+        <button class="open-btn" id="openInviteBtn">
+          Buka Undangan
+        </button>
+      </div>
+
+      <div class="gate-note">
+        Mohon maaf bila ada kesalahan nama / alamat 🙏
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SCREEN 2: MAIN CONTENT ===================== -->
+  <main class="main-content" id="mainContent">
+
+    <!-- HERO DENGAN FOTO PASANGAN -->
+    <section class="hero">
+      <div
+        class="hero-image-wrapper"
+        style="background-image:url('images/pasangan.jpg');">
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-label">The Wedding of</div>
+        <div class="hero-names">Bagus &amp; Ayu</div>
+        <div class="hero-date">Minggu, 21 Desember 2025</div>
+      </div>
+    </section>
+
+    <!-- UCAPAN PEMBUKA -->
+    <section class="section">
+      <h2>Assalamu’alaikum Wr. Wb.</h2>
+      <p>
+        Dengan memohon rahmat dan ridho Allah SWT,
+        kami bermaksud mengundang Bapak/Ibu/Saudara/i
+        untuk menghadiri acara pernikahan kami.
+      </p>
+    </section>
+
+    <!-- DETAIL ACARA -->
+    <section class="section">
+      <h2>Detail Acara</h2>
+
+      <div class="cards">
+        <div class="card">
+          <h3>Akad Nikah</h3>
+          <p>Sabtu, 21 Desember 2025</p>
+          <p>Pukul 08.00 WIB</p>
+          <p>Rumah Mempelai Wanita</p>
+        </div>
+
+        <div class="card">
+          <h3>Resepsi</h3>
+          <p>Sabtu, 21 Desember 2025</p>
+          <p>Pukul 10.00 - 14.00 WIB</p>
+          <p>Gedung / Aula ...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GIFT / AMPL0P DIGITAL -->
+    <section class="section">
+      <h2>Gift / Amplop Digital</h2>
+
+      <div class="gift-box">
+        <h3>Doa restu Anda adalah hadiah terbaik bagi kami 💐</h3>
+        <div class="gift-desc">
+          Namun jika berkenan memberikan hadiah,
+          Anda dapat mengirimkan amplop digital ke rekening berikut:
+        </div>
+
+        <div class="rekening" id="rekeningText">
+          BCA · 1234 5678 910  
+          a.n. Bagus Cahyo
+        </div>
+
+        <button class="copy-btn" id="copyBtn">Salin Nomor Rekening</button>
+
+        <div class="gift-desc" id="copyNote" style="display:none;">
+          Nomor rekening sudah disalin ✔
+        </div>
+      </div>
+    </section>
+
+    <!-- PENUTUP -->
+    <section class="section">
+      <p class="closing-note">
+        Merupakan suatu kehormatan dan kebahagiaan bagi kami
+        apabila Bapak/Ibu/Saudara/i berkenan hadir
+        untuk memberikan doa restu.
+      </p>
+      <p class="closing-note">
+        Wassalamu’alaikum Wr. Wb.
+      </p>
+    </section>
+
+    <footer class="footer">
+      Terima kasih ❤️
+    </footer>
+  </main>
+
+  <script>
+    // tombol "Buka Undangan" -> sembunyikan gate, tampilkan isi
+    const gateScreen   = document.getElementById("gateScreen");
+    const mainContent  = document.getElementById("mainContent");
+    const openInviteBtn = document.getElementById("openInviteBtn");
+
+    openInviteBtn.addEventListener("click", () => {
+      gateScreen.classList.add("hidden");
+      mainContent.classList.add("visible");
+    });
+
+    // tombol salin nomor rekening
+    const copyBtn = document.getElementById("copyBtn");
+    const rekeningText = document.getElementById("rekeningText");
+    const copyNote = document.getElementById("copyNote");
+
+    copyBtn.addEventListener("click", () => {
+      const textToCopy = rekeningText.innerText.replace(/\s+/g, " ").trim();
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          copyNote.style.display = "block";
+          setTimeout(() => {
+            copyNote.style.display = "none";
+          }, 2000);
+        })
+        .catch(() => {
+          alert("Gagal menyalin nomor rekening. Silakan salin manual.");
+        });
+    });
+  </script>
+</body>
+</html>
