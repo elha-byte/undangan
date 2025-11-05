@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Undangan Pernikahan Riesa & Lukman</title>
 
-  <!-- Import font Playfair Display dari Google Fonts -->
+  <!-- Font Playfair Display -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
@@ -23,7 +23,7 @@
       color: #222;
     }
 
-    /* =============== LAYAR AMPLOP =============== */
+    /* ================= LAYAR AMPLOP (MOBILE FIRST) ================= */
 
     .gate-screen {
       position: fixed;
@@ -32,7 +32,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: 1.5rem 1.25rem;
       text-align: center;
       z-index: 9999;
       transition: opacity 0.6s ease, visibility 0.6s ease;
@@ -44,32 +44,34 @@
       pointer-events: none;
     }
 
+    /* amplop kita desain lebar dan agak “pipih” di HP */
     .envelope-wrapper {
-      width: 90%;
-      max-width: 720px;
+      width: 100%;
+      max-width: 360px;    /* fokus HP: kira-kira 90% lebar hp */
       cursor: pointer;
       user-select: none;
-      transition: transform 0.3s ease;
+      transition: transform 0.25s ease;
     }
 
-    .envelope-wrapper:hover {
-      transform: scale(1.02);
+    .envelope-wrapper:active {
+      transform: scale(0.98);
     }
 
     .envelope-card {
       position: relative;
       background: #ffffff;
-      border-radius: 0.25rem;
+      border-radius: 0.5rem;
       overflow: hidden;
-      box-shadow: 0 24px 40px rgba(0,0,0,0.15);
+      box-shadow: 0 20px 35px rgba(0,0,0,0.18);
     }
 
+    /* flap atas: tidak terlalu tinggi supaya amplop tidak jadi kotak */
     .envelope-flap {
       position: relative;
-      height: 140px;
+      height: 90px;   /* penting: kecilkan tinggi buat HP */
       background: linear-gradient(90deg, #ff7a5c, #ff2f92);
-      border-bottom-left-radius: 50px;
-      border-bottom-right-radius: 50px;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -78,12 +80,12 @@
     .envelope-flap::after {
       content: "";
       position: absolute;
-      bottom: -18px;
+      bottom: -14px;
       left: 40px;
       right: 40px;
-      height: 24px;
+      height: 18px;
       background: rgba(0,0,0,0.08);
-      filter: blur(8px);
+      filter: blur(7px);
       opacity: 0.6;
       z-index: -1;
     }
@@ -96,42 +98,45 @@
     }
 
     .monogram img {
-      width: 140px;
-      max-width: 45%;
+      width: 110px;      /* ukuran logo di flap untuk HP */
+      max-width: 60%;
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
     }
 
+    /* isi amplop dibuat lebih pipih, tidak terlalu tinggi */
     .envelope-body {
-      padding: 3rem 2.5rem 2rem;
+      padding: 1.8rem 1.6rem 1.6rem;
     }
 
     .envelope-top-row {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #555;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.2rem;
     }
 
     .envelope-date {
       letter-spacing: 0.05em;
       font-weight: 500;
+      font-size: 0.8rem;
     }
 
     .envelope-turut {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       font-weight: 400;
+      text-align: right;
     }
 
     .envelope-names {
-      font-size: 2rem;
+      font-size: 1.5rem;     /* lebih kecil supaya kartu tidak memanjang ke bawah */
       color: #333;
       text-align: left;
       line-height: 1.1;
-      font-weight: 700; /* nama di amplop bold */
+      font-weight: 700;      /* nama bold */
     }
 
     .envelope-names span {
@@ -149,19 +154,26 @@
       content: "⬇ ";
     }
 
-    @media (max-width: 480px) {
-      .envelope-body {
-        padding: 2.5rem 1.6rem 1.8rem;
+    /* Sedikit perbaikan di layar lebih lebar (tablet/laptop) */
+    @media (min-width: 600px) {
+      .envelope-wrapper {
+        max-width: 420px;
       }
-      .envelope-names {
-        font-size: 1.6rem;
+      .envelope-flap {
+        height: 110px;
       }
       .monogram img {
-        width: 120px;
+        width: 130px;
+      }
+      .envelope-body {
+        padding: 2.2rem 2rem 1.8rem;
+      }
+      .envelope-names {
+        font-size: 1.8rem;
       }
     }
 
-    /* =============== KONTEN UNDANGAN =============== */
+    /* ================= KONTEN UNDANGAN ================= */
 
     .main-content {
       opacity: 0;
@@ -181,14 +193,14 @@
     }
 
     .section h2 {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
       color: #5a4a3b;
       font-weight: 600;
     }
 
     .section p {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       line-height: 1.6;
       color: #4a4a4a;
       font-weight: 400;
@@ -198,19 +210,20 @@
       margin-top: 2rem;
       background: #fff;
       border-radius: 1.2rem;
-      padding: 1.8rem 1.4rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      padding: 1.6rem 1.3rem;
+      box-shadow: 0 16px 32px rgba(0,0,0,0.08);
+      text-align: center;
     }
 
     .hero-names {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       margin-bottom: 0.25rem;
       color: #333;
       font-weight: 600;
     }
 
     .hero-date {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #777;
       font-weight: 400;
     }
@@ -218,49 +231,59 @@
     .detail-grid {
       display: grid;
       gap: 1rem;
-      margin-top: 2rem;
+      margin-top: 1.8rem;
     }
 
     .detail-card {
       background: #fff;
       border-radius: 1rem;
-      padding: 1.2rem 1rem;
+      padding: 1.1rem 1rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #444;
       font-weight: 400;
+      text-align: left;
     }
 
     .detail-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.4rem;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
       color: #5a4a3b;
       font-weight: 600;
     }
 
     .gift-box {
-      margin-top: 2rem;
+      margin-top: 1.8rem;
       background: #fff;
       border-radius: 1rem;
-      padding: 1.5rem 1rem;
+      padding: 1.3rem 1rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      text-align: left;
+    }
+
+    .gift-box h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      color: #5a4a3b;
+      font-weight: 600;
     }
 
     .rekening {
-      margin-top: 0.75rem;
-      padding: 0.8rem 1rem;
+      margin-top: 0.6rem;
+      padding: 0.75rem 0.9rem;
       border-radius: 0.75rem;
       border: 1px solid #e3d6c9;
       background: #faf7f3;
       font-weight: 600;
       color: #333;
       word-break: break-word;
+      font-size: 0.9rem;
     }
 
     .copy-btn {
-      margin-top: 0.75rem;
-      padding: 0.55rem 0.9rem;
+      margin-top: 0.6rem;
+      padding: 0.5rem 0.85rem;
       border-radius: 0.75rem;
       border: none;
       background: #5a4a3b;
@@ -271,7 +294,7 @@
     }
 
     .copy-info {
-      margin-top: 0.4rem;
+      margin-top: 0.35rem;
       font-size: 0.75rem;
       color: #777;
       display: none;
@@ -285,15 +308,15 @@
 
     .closing-note {
       margin-top: 2rem;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #6b6b6b;
       font-weight: 400;
     }
 
     .footer {
-      margin-top: 3rem;
+      margin-top: 2.5rem;
       text-align: center;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #fff;
       font-weight: 400;
     }
