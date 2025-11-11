@@ -1,582 +1,203 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Undangan Pernikahan Riesa & Lukman</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Undangan — Riesa & Lukman</title>
 
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Bintaro (lokal) + Montserrat (Google) -->
+  <style>
+    @font-face {
+      font-family: 'Bintaro';
+      src: url('fonts/Bintaro.ttf') format('truetype');
+      font-weight: 400 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-    }
-
+    /* ============ RESET & BASE ============ */
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    html,body { height:100%; }
     body {
-      font-family: "Playfair Display", serif;
-      background: linear-gradient(135deg, #ffc4d0, #f7a6b0);
-      min-height: 100vh;
-      color: #111;
+      font-family: "Playfair Display", "Bintaro", serif;
+      background: linear-gradient(135deg,#ffc4d0,#f7a6b0);
+      color:#111;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout:none;
     }
+    img { display:block; max-width:100%; height:auto; }
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    /* ========== AMBANG / AMPLOP ========== */
-
+    /* ============ AMPLOP / GATE ============ */
     .gate-screen {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem 1.25rem;
-      text-align: center;
-      z-index: 9999;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      padding:1.5rem; text-align:center; background: linear-gradient(180deg, rgba(0,0,0,0.06), transparent);
+      z-index:9999; transition:opacity .52s ease, visibility .52s ease;
     }
-    .gate-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+    .gate-screen.hidden { opacity:0; visibility:hidden; pointer-events:none; }
 
-    .envelope-wrapper {
-      width: 100%;
-      max-width: 360px;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.25s ease;
-    }
-    .envelope-wrapper:active {
-      transform: scale(0.98);
-    }
-
+    .envelope-wrapper { width:100%; max-width:360px; cursor:pointer; }
     .envelope-card {
-      background: #fff;
-      border-radius: 0.5rem;
-      overflow: hidden;
-      box-shadow: 0 20px 35px rgba(0,0,0,0.18);
+      background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.18);
+      transform-origin:center; transition: transform .52s cubic-bezier(.2,.9,.25,1), opacity .52s ease;
     }
+    .envelope-card.open { transform: translateY(-22px) scale(.98); opacity:0; }
 
     .envelope-flap {
-      position: relative;
-      height: 90px;
-      background: linear-gradient(90deg, #ff7a5c, #ff2f92);
-      border-bottom-left-radius: 40px;
-      border-bottom-right-radius: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height:90px; display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(90deg,#ff7a5c,#ff2f92); border-bottom-left-radius:40px; border-bottom-right-radius:40px;
+      transform-origin:50% 10%; transition: transform .52s cubic-bezier(.2,.9,.25,1);
+      perspective:800px; backface-visibility:hidden;
     }
+    .envelope-card.open .envelope-flap { transform: rotateX(180deg) translateY(-28px) scale(.98); }
 
-    .envelope-flap::after {
-      content: "";
-      position: absolute;
-      bottom: -14px;
-      left: 40px;
-      right: 40px;
-      height: 18px;
-      background: rgba(0,0,0,0.08);
-      filter: blur(7px);
-      opacity: 0.6;
-      z-index: -1;
-    }
+    .monogram img { width:110px; max-width:60%; height:auto; object-fit:contain; filter:drop-shadow(0 3px 6px rgba(0,0,0,0.25)); }
 
-    .monogram {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
-    .monogram img {
-      width: 110px;
-      max-width: 60%;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
-    }
+    .envelope-body { padding:1.8rem 1.6rem 1.6rem; }
+    .envelope-top-row { display:flex; justify-content:space-between; color:#555; font-size:.8rem; margin-bottom:1.1rem; }
+    .envelope-names { font-weight:700; font-size:1.5rem; color:#333; line-height:1.05; text-align:left; }
+    .amp-hint { margin-top:1rem; font-size:.85rem; color:rgba(255,255,255,.95); }
 
-    .envelope-body {
-      padding: 1.8rem 1.6rem 1.6rem;
-    }
-
-    .envelope-top-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.8rem;
-      color: #555;
-      margin-bottom: 1.2rem;
-    }
-    .envelope-date {
-      letter-spacing: 0.05em;
-      font-weight: 500;
-    }
-    .envelope-turut {
-      font-size: 0.7rem;
-      text-align: right;
-    }
-
-    .envelope-names {
-      font-size: 1.5rem;
-      color: #333;
-      line-height: 1.1;
-      font-weight: 700;
-      text-align: left;
-    }
-    .envelope-names span { display: block; }
-
-    .amp-hint {
-      margin-top: 1rem;
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.9);
-    }
-    .amp-hint::before { content: "⬇ "; }
-
-    @media (min-width: 600px) {
-      .envelope-wrapper { max-width: 420px; }
-      .envelope-flap { height: 110px; }
-      .monogram img { width: 130px; }
-      .envelope-body { padding: 2.2rem 2rem 1.8rem; }
-      .envelope-names { font-size: 1.8rem; }
-    }
-
-    /* ========== PAGE WRAPPER ========== */
-
-    .page {
-      opacity: 0;
-      transition: opacity 0.6s ease;
-      padding-bottom: 3rem;
-    }
-    .page.visible {
-      opacity: 1;
-    }
-
+    /* ============ PAGE (MAIN) ============ */
+    .page { opacity:0; transition:opacity .52s ease; padding-bottom:3rem; }
+    .page.visible { opacity:1; }
     .page-inner {
-      max-width: 420px;   /* fokus HP */
-      margin: 0 auto;
-      background: linear-gradient(180deg, #151515 0%, #ff7a5c 40%, #ff2f92 70%, #ff7a5c 100%);
-      box-shadow: 0 0 40px rgba(0,0,0,0.25);
+      max-width:420px; margin:0 auto; overflow:hidden;
+      transform-origin:top center; opacity:0; transform: translateY(10px) scale(.995);
+      transition: opacity .52s ease, transform .52s cubic-bezier(.2,.9,.25,1);
     }
+    .page.visible .page-inner { opacity:1; transform:none; }
 
-    section {
-      width: 100%;
-    }
+    section { width:100%; }
 
-    /* ========== HERO FOTO TANGGA ========== */
+    /* ============ HERO ============ */
+    .hero { position:relative; min-height:640px; background:#000; overflow:hidden; }
+    .hero-bg { position:absolute; inset:0; background: url('images/hero-stairs.jpg') center/cover no-repeat; filter:brightness(.55); }
+    .hero-corner { position:absolute; top:0; right:0; width:90px; height:90px; background: linear-gradient(180deg,#ff7a5c,#ff2f92); border-bottom-left-radius:80px; }
 
-    .hero {
-      position: relative;
-      min-height: 640px;
-      background: #000;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: url("images/hero-stairs.png") center/cover no-repeat;
-    }
-
-    .hero-content {
-      position: relative;
-      padding: 1.8rem 1.3rem 2.4rem;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      color: #fff;
-    }
-
-    .hero-tag {
-      font-size: 0.8rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+    .hero-content { position:relative; padding:1.8rem 1.3rem; color:#fff; height:100%; display:flex; flex-direction:column; justify-content:flex-start; }
+    .hero-tag { font-size:.8rem; letter-spacing:.25em; text-transform:uppercase; text-align:center; margin-top:8px; opacity:.95; }
 
     .hero-script {
-      font-family: "Dancing Script", cursive;
-      font-size: 2.8rem;
-      line-height: 1;
-      margin-top: 2.5rem;
+      font-family: "Bintaro", "Dancing Script", cursive;
+      font-size:2.8rem; line-height:1; margin-top:2.2rem; text-align:center;
+      color: #fff; letter-spacing:.02em;
     }
-    .hero-script span {
-      display: block;
-    }
+    .hero-script span { display:block; }
 
-    .hero-corner {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 90px;
-      height: 90px;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
-      border-bottom-left-radius: 80px;
-    }
-
+    /* overlay: SAVE THE DATE (left bottom) */
     .hero-save {
-      position: absolute;
-      left: 1.3rem;
-      bottom: 2.2rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
+      position:absolute; left:1.2rem; bottom:2rem; text-transform:uppercase; letter-spacing:.22em;
+      color:#fff; font-size:.72rem;
+      text-align:left;
     }
-
+    /* overlay: DATE (right bottom) */
     .hero-date-block {
-      position: absolute;
-      right: 1.3rem;
-      bottom: 1.8rem;
-      text-align: right;
-      font-weight: 700;
-      font-size: 1.6rem;
-      line-height: 1.1;
+      position:absolute; right:1.2rem; bottom:1.6rem; text-align:right; color:#fff; font-weight:700; font-size:1.5rem; line-height:1.05;
     }
-    .hero-date-block span {
-      display: block;
-    }
+    .hero-date-block span { display:block; }
 
-    /* ========== SAVE THE DATE CTA ========== */
-
-    .section-save {
-      padding: 2rem 1.5rem 2.4rem;
-      text-align: center;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
+    /* ============ SAVE SECTION (countdown + button) ============ */
+    .section-save { padding:1.8rem 1.4rem 2.4rem; text-align:center; background: linear-gradient(180deg,#ff7a5c,#ff2f92); }
+    .countdown { display:flex; justify-content:center; gap:.6rem; margin-bottom:1.2rem; max-width:320px; margin-left:auto; margin-right:auto; }
+    .countdown-box {
+      flex:1; min-width:60px; padding:.6rem .35rem; border-radius:.9rem;
+      background: rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.45);
+      text-align:center;
     }
-
-    .save-pill-row {
-      display: flex;
-      justify-content: center;
-      gap: 0.4rem;
-      margin-bottom: 1.4rem;
-    }
-    .save-pill-row span {
-      width: 22px;
-      height: 22px;
-      border-radius: 0.5rem;
-      background: #fff;
-      opacity: 0.85;
-    }
+    .countdown-number { font-weight:700; font-size:1.05rem; color:#fff; display:block; }
+    .countdown-label { font-size:.68rem; color:rgba(255,255,255,.95); letter-spacing:.06em; text-transform:uppercase; }
 
     .btn-primary {
-      display: inline-block;
-      padding: 0.7rem 1.8rem;
-      border-radius: 999px;
-      border: none;
-      background: #fff;
-      color: #ff2f92;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      cursor: pointer;
+      display:inline-block; padding:.68rem 1.8rem; border-radius:999px; border:0; background:#fff;
+      color:#ff2f92; font-weight:700; font-size:.92rem; text-transform:uppercase; cursor:pointer;
+      box-shadow:0 8px 18px rgba(0,0,0,0.12);
     }
 
-    /* ========== DOA & NAMA PENGANTIN ========== */
+    /* ============ INTRO (doa + names) ============ */
+    .section-intro { padding:2.2rem 1.5rem; background: linear-gradient(180deg,#ff2f92,#ff7a5c); color:#fff; text-align:center; }
+    .intro-bismi { font-family:'Bintaro','Playfair Display',serif; font-size:1.45rem; margin-bottom:.6rem; color:#fff; }
+    .intro-card { background:#fff; color:#111; border-radius:14px; padding:1.2rem; box-shadow:0 16px 30px rgba(0,0,0,0.16); margin-top:1rem; text-align:left; }
+    .intro-photo { border-radius:10px; overflow:hidden; margin-bottom:.9rem; }
+    .intro-names { display:flex; align-items:center; justify-content:center; gap:.6rem; margin-bottom:.7rem; flex-wrap:wrap; }
+    .intro-name-big { font-weight:700; font-size:.95rem; }
+    .intro-and { font-size:1.2rem; color:#ff2f92; font-weight:700; }
 
-    .section-intro {
-      padding: 2.2rem 1.5rem;
-      background: linear-gradient(180deg, #ff2f92, #ff7a5c);
-      color: #fff;
-      text-align: center;
-    }
+    /* ============ SCHEDULE ============ */
+    .section-schedule { padding:2.4rem 1.5rem; background: linear-gradient(180deg,#ff7a5c,#ff2f92); color:#fff; text-align:center; }
+    .schedule-cards { margin-top:1.6rem; display:grid; gap:1rem; }
+    .schedule-card { background: rgba(255,255,255,.12); border-radius:14px; padding:1rem; box-shadow:0 12px 26px rgba(0,0,0,0.18); color:#fff; }
+    .schedule-card-inner { background:#fff; color:#111; border-radius:8px; padding:.6rem .6rem; margin-top:.6rem; font-size:.82rem; }
 
-    .intro-bismi {
-      font-family: "Dancing Script", cursive;
-      font-size: 1.5rem;
-      margin-bottom: 0.8rem;
-    }
+    .btn-location { margin-top:.6rem; padding:.45rem .9rem; border-radius:999px; border:0; background:#fff; color:#ff2f92; font-weight:700; cursor:pointer; }
 
-    .intro-text {
-      font-size: 0.9rem;
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
+    /* ============ GALLERY ============ */
+    .section-gallery { padding:2rem 1rem; background:#ff7a5c; }
+    .gallery-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.12rem; border-radius:8px; overflow:hidden; box-shadow:0 12px 24px rgba(0,0,0,0.18); }
 
-    .intro-card {
-      background: #fff;
-      color: #111;
-      border-radius: 1.4rem;
-      padding: 1.3rem 1.2rem 1.6rem;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.18);
-    }
+    .gallery-grid img { width:100%; height:100%; object-fit:cover; display:block; }
 
-    .intro-photo {
-      border-radius: 1rem;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
+    /* ============ GIFT (cards use Montserrat) ============ */
+    .section-gift { padding:2.4rem 1.4rem; background:#ff7a5c; color:#fff; text-align:center; }
+    .gift-boxes { background:#fff; border-radius:14px; padding:1.2rem; max-width:380px; margin:0 auto; box-shadow:0 16px 30px rgba(0,0,0,0.18); color:#111; }
+    .gift-cards { display:grid; gap:.9rem; }
+    .gift-card { border-radius:12px; padding:.9rem 1rem; color:#fff; position:relative; overflow:hidden; font-family:'Montserrat', sans-serif; }
+    .gift-card.bca { background: linear-gradient(135deg,#0044a3,#006edc); }
+    .gift-card.bni { background: linear-gradient(135deg,#ff7a1c,#ff4f48); }
+    .gift-bank-name { font-weight:700; margin-bottom:.3rem; font-size:.92rem; }
+    .gift-bank-no { font-weight:700; font-size:1rem; letter-spacing:.06em; }
+    .gift-owner { margin-top:.12rem; font-size:.78rem; font-weight:500; }
 
-    .intro-names {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-      margin-bottom: 0.8rem;
-    }
-    .intro-names span {
-      display: block;
-    }
-    .intro-name-big {
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-    .intro-and {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #ff2f92;
-    }
+    .btn-copy { margin-top:.5rem; padding:.36rem .75rem; border-radius:999px; border:0; background: rgba(255,255,255,.16); color:#fff; cursor:pointer; font-family:'Montserrat',sans-serif; font-weight:600; }
 
-    .intro-detail {
-      font-size: 0.75rem;
-      line-height: 1.5;
-      margin-bottom: 0.5rem;
+    /* ============ THANKS ============ */
+    .section-thanks { padding:2.4rem 1.5rem; background: linear-gradient(180deg,#ff7a5c,#ff2f92); color:#fff; text-align:center; }
+    .thanks-title { font-family:'Bintaro','Playfair Display',serif; font-size:1.6rem; margin-bottom:.5rem; }
+
+    /* ============ ANIMATIONS (entrance + envelope) ============ */
+    [data-animate] { opacity:0; transform: translateY(18px) scale(.995); will-change: transform, opacity; animation-fill-mode:both; animation-duration:540ms; animation-timing-function:cubic-bezier(.2,.9,.25,1); animation-delay: var(--delay,0ms); }
+    @keyframes fadeUp { from{opacity:0; transform:translateY(18px) scale(.995)} to{opacity:1; transform:translateY(0) scale(1)} }
+    @keyframes popIn { from{opacity:0; transform:translateY(6px) scale(.96)} 60%{transform:translateY(-4px) scale(1.03); opacity:1} to{opacity:1; transform:none} }
+    .in-view { animation-name: fadeUp; opacity:1; transform:none; }
+    .in-view.pop { animation-name: popIn; animation-duration:420ms; }
+
+    .hero-script[data-animate] { font-size:2.8rem; }
+    .countdown-box[data-animate] { animation-duration:480ms; }
+    .gallery-grid img[data-animate] { animation-duration:420ms; }
+
+    @media (prefers-reduced-motion:reduce) {
+      [data-animate], .envelope-card, .envelope-flap, .page-inner { animation:none!important; transition:none!important; transform:none!important; opacity:1!important; }
     }
 
-    .intro-invite {
-      margin-top: 0.8rem;
-      font-size: 0.85rem;
-      line-height: 1.6;
+    /* responsive tweaks */
+    @media (min-width:600px) {
+      .envelope-wrapper { max-width:420px; }
+      .hero-script { font-size:3.4rem; }
+      .hero { min-height:720px; }
+      .gallery-grid { grid-template-columns: repeat(6, 1fr); }
     }
-
-    /* ========== JADWAL ACARA ========== */
-
-    .section-schedule {
-      padding: 2.4rem 1.5rem 2.6rem;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
-      color: #fff;
-      text-align: center;
-    }
-
-    .schedule-date-label {
-      font-family: "Dancing Script", cursive;
-      font-size: 1.4rem;
-    }
-    .schedule-date-main {
-      margin-top: 0.3rem;
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-
-    .schedule-cards {
-      margin-top: 1.8rem;
-      display: grid;
-      gap: 1.2rem;
-    }
-
-    .schedule-card {
-      background: rgba(255,255,255,0.15);
-      border-radius: 1.4rem;
-      padding: 1.1rem 1rem 1.3rem;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.22);
-    }
-
-    .schedule-card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
-    }
-    .schedule-card-inner {
-      background: #fff;
-      color: #111;
-      border-radius: 0.9rem;
-      padding: 0.7rem 0.6rem;
-      font-size: 0.78rem;
-      line-height: 1.5;
-    }
-
-    .schedule-location {
-      margin-top: 0.7rem;
-      font-size: 0.78rem;
-    }
-
-    .btn-location {
-      margin-top: 0.8rem;
-      padding: 0.5rem 1.1rem;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.8rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      cursor: pointer;
-      background: #fff;
-      color: #ff2f92;
-    }
-
-    /* ========== GALERI ========== */
-
-    .section-gallery {
-      padding: 2.2rem 1rem 2.4rem;
-      background: #ff7a5c;
-    }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 0.15rem;
-      border-radius: 0.6rem;
-      overflow: hidden;
-      box-shadow: 0 14px 26px rgba(0,0,0,0.22);
-    }
-
-    .gallery-grid img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* ========== GIFT / AMBLOP DIGITAL ========== */
-
-    .section-gift {
-      padding: 2.4rem 1.5rem 2.6rem;
-      background: #ff7a5c;
-      color: #fff;
-      text-align: center;
-    }
-
-    .gift-title {
-      font-family: "Dancing Script", cursive;
-      font-size: 1.6rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .gift-text {
-      font-size: 0.85rem;
-      line-height: 1.7;
-      max-width: 360px;
-      margin: 0 auto 1.4rem;
-    }
-
-    .gift-boxes {
-      background: #fff;
-      border-radius: 1.4rem;
-      padding: 1.4rem 1.1rem;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.25);
-      max-width: 380px;
-      margin: 0 auto;
-      color: #111;
-    }
-
-    .gift-cards {
-      display: grid;
-      gap: 0.9rem;
-    }
-
-    .gift-card {
-      border-radius: 1rem;
-      padding: 0.9rem 1rem;
-      color: #fff;
-      text-align: left;
-      font-size: 0.85rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .gift-card.bca {
-      background: linear-gradient(135deg, #0044a3, #006edc);
-    }
-    .gift-card.bni {
-      background: linear-gradient(135deg, #ff7a1c, #ff4f48);
-    }
-
-    .gift-bank-name {
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-      font-size: 0.9rem;
-    }
-    .gift-bank-no {
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-    .gift-owner {
-      font-size: 0.78rem;
-      margin-top: 0.15rem;
-    }
-
-    .btn-copy {
-      margin-top: 0.5rem;
-      padding: 0.38rem 0.75rem;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.75rem;
-      cursor: pointer;
-      background: rgba(255,255,255,0.16);
-      color: #fff;
-      backdrop-filter: blur(2px);
-    }
-
-    .gift-note {
-      margin-top: 1rem;
-      font-size: 0.78rem;
-      color: #555;
-      text-align: center;
-    }
-
-    .copy-info {
-      margin-top: 0.35rem;
-      font-size: 0.75rem;
-      color: #2f7a2f;
-      display: none;
-      text-align: center;
-    }
-
-    /* ========== THANKS / FOOTER ========== */
-
-    .section-thanks {
-      padding: 2.4rem 1.5rem 2.8rem;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
-      text-align: center;
-      color: #fff;
-    }
-
-    .thanks-title {
-      font-family: "Dancing Script", cursive;
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .thanks-text {
-      font-size: 0.8rem;
-      max-width: 320px;
-      margin: 0 auto;
-    }
-
-    .footer {
-      margin-top: 1rem;
-      font-size: 0.75rem;
-      opacity: 0.9;
-    }
-
   </style>
 </head>
 <body>
 
-  <!-- ===== Amplop ===== -->
+  <!-- ========== AMBANG / AMPLOP ========== -->
   <div class="gate-screen" id="gateScreen">
     <div class="envelope-wrapper" id="envelopeOpen">
-      <div class="envelope-card">
+      <div class="envelope-card" id="envelopeCard">
         <div class="envelope-flap">
           <div class="monogram">
-            <!-- ganti src dengan logo RL kamu -->
-            <img src="images/logo-rl.png" alt="Logo Riesa dan Lukman">
+            <img src="images/logo-rl.png" alt="Logo RL">
           </div>
         </div>
+
         <div class="envelope-body">
           <div class="envelope-top-row">
             <span class="envelope-date">12/12/25</span>
             <span class="envelope-turut">Turut Mengundang :</span>
           </div>
+
           <div class="envelope-names">
             <span>Riesa &amp;</span>
             <span>Lukman</span>
@@ -584,229 +205,270 @@
         </div>
       </div>
     </div>
+
     <p class="amp-hint">Ketuk / klik amplop untuk membuka undangan</p>
   </div>
 
-  <!-- ===== Halaman utama ===== -->
+  <!-- ========== HALAMAN UTAMA ========== -->
   <main class="page" id="mainPage">
     <div class="page-inner">
 
       <!-- HERO -->
-      <section class="hero">
-        <div class="hero-bg"></div>
+      <section class="hero" aria-label="Hero">
+        <div class="hero-bg" role="img" aria-label="Foto tangga"></div>
         <div class="hero-corner"></div>
 
         <div class="hero-content">
-          <div class="hero-tag">WEDDING OF</div>
+          <div class="hero-tag" data-animate>WEDDING OF</div>
 
-          <div class="hero-script">
-            <span></span>
+          <div class="hero-script" data-animate>
+            <span>Riesa</span>
             <span>&amp;</span>
-            <span></span>
+            <span>Lukman</span>
           </div>
+        </div>
 
-          <div class="hero-save">
-            SAVE<br>THE<br>DATE
-          </div>
+        <!-- overlay SAVE THE DATE (left bottom) -->
+        <div class="hero-save" data-animate>SAVE<br>THE<br>DATE</div>
 
-          <div class="hero-date-block">
-            <span>12.</span>
-            <span>12.</span>
-            <span>2025.</span>
-          </div>
+        <!-- overlay tanggal (right bottom) -->
+        <div class="hero-date-block" data-animate>
+          <span>12.</span>
+          <span>12.</span>
+          <span>2025.</span>
         </div>
       </section>
 
-      <!-- SAVE THE DATE -->
-      <section class="section-save">
-        <div class="save-pill-row">
-          <span></span><span></span><span></span><span></span>
+      <!-- SAVE + COUNTDOWN -->
+      <section class="section-save" aria-label="Save the date section">
+        <div class="countdown" id="countdown">
+          <div class="countdown-box" data-animate><span class="countdown-number" id="cd-days">00</span><span class="countdown-label">Hari</span></div>
+          <div class="countdown-box" data-animate><span class="countdown-number" id="cd-hours">00</span><span class="countdown-label">Jam</span></div>
+          <div class="countdown-box" data-animate><span class="countdown-number" id="cd-mins">00</span><span class="countdown-label">Menit</span></div>
+          <div class="countdown-box" data-animate><span class="countdown-number" id="cd-secs">00</span><span class="countdown-label">Detik</span></div>
         </div>
-        <button class="btn-primary" type="button">
-          Save The Date
-        </button>
+
+        <button class="btn-primary" data-animate>Save The Date</button>
       </section>
 
-      <!-- DOA & NAMA PENGANTIN -->
-      <section class="section-intro">
-        <div class="intro-bismi">Bismillahirrahmanirrahim</div>
-        <p class="intro-text">
+      <!-- DOA & NAMA -->
+      <section class="section-intro" data-animate>
+        <div class="intro-bismi" data-animate>Bismillahirrahmanirrahim</div>
+        <p class="intro-text" data-animate>
           Maha Suci Allah SWT yang telah menciptakan makhluk-Nya berpasang-pasangan.
           Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
         </p>
 
-        <div class="intro-card">
-          <div class="intro-photo">
-            <!-- foto berdua -->
-            <img src="images/couple-card.jpg" alt="Riesa dan Lukman">
-          </div>
+        <div class="intro-card" data-animate>
+          <div class="intro-photo"><img src="images/couple-card.jpg" alt="Foto pasangan"></div>
 
-          <div class="intro-names">
+          <div class="intro-names" data-animate>
             <div>
               <span class="intro-name-big">M. Lukmannul Hakim</span>
-              <span class="intro-detail">
-                Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
-                (Jl Wilis No.69 Podosugih, Pekalongan Barat)
-              </span>
+              <span class="intro-detail">Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>(Jl Wilis No.69 Podosugih)</span>
             </div>
-            <div class="intro-and">&amp;</div>
+            <div class="intro-and" data-animate>&amp;</div>
             <div>
-              <span class="intro-name-big">Riesa Putri Febriani</span>
-              <span class="intro-detail">
-                Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
-                (Gg. Pamsimas, Sapuro Indah, Pekalongan Barat)
-              </span>
+              <span class="intro-name-big">Riesa Putri Febziani</span>
+              <span class="intro-detail">Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>(Gg. Pamsimas, Sapuro Indah)</span>
             </div>
           </div>
 
-          <p class="intro-invite">
-            Dengan penuh rasa hormat kami mengharapkan kehadiran
-            Bapak/Ibu/Saudara sekalian pada Acara Pernikahan kami
-            yang akan kami laksanakan pada:
-          </p>
+          <p class="intro-invite" data-animate>Dengan penuh rasa hormat kami mengharapkan kehadiran Bapak/Ibu/Saudara sekalian pada acara pernikahan kami.</p>
         </div>
       </section>
 
-      <!-- JADWAL ACARA -->
-      <section class="section-schedule">
-        <div class="schedule-date-label">Jumat</div>
-        <div class="schedule-date-main">12 Desember 2025</div>
+      <!-- JADWAL -->
+      <section class="section-schedule" data-animate>
+        <div class="schedule-date-label" data-animate>Jumat</div>
+        <div class="schedule-date-main" data-animate>12 Desember 2025</div>
 
-        <div class="schedule-cards">
-          <div class="schedule-card">
+        <div class="schedule-cards" data-animate>
+          <div class="schedule-card" data-animate>
             <div class="schedule-card-title">AKAD NIKAH</div>
-            <div class="schedule-card-inner">
-              Jumat, 12 Desember 2025<br>
-              Pukul 08.00 – Selesai
-            </div>
-            <div class="schedule-location">
-              Kediaman Mempelai Putri<br>
-              Gg. Pamsimas, Sapuro Indah<br>
-              Pekalongan Barat
-            </div>
-            <button class="btn-location" type="button">
-              <span>📍</span> <span>Lokasi</span>
-            </button>
+            <div class="schedule-card-inner">Jumat, 12 Desember 2025<br>Pukul 08.00 – Selesai</div>
+            <div class="schedule-location">Kediaman Mempelai Putri</div>
+            <button class="btn-location" data-animate>📍 Lokasi</button>
           </div>
 
-          <div class="schedule-card">
+          <div class="schedule-card" data-animate>
             <div class="schedule-card-title">RESEPSI</div>
-            <div class="schedule-card-inner">
-              Jumat, 12 Desember 2025<br>
-              Pukul 14.00 – Selesai
-            </div>
-            <div class="schedule-location">
-              Kediaman Mempelai Putri<br>
-              Gg. Pamsimas, Sapuro Indah<br>
-              Pekalongan Barat
-            </div>
-            <button class="btn-location" type="button">
-              <span>📍</span> <span>Lokasi</span>
-            </button>
+            <div class="schedule-card-inner">Jumat, 12 Desember 2025<br>Pukul 14.00 – Selesai</div>
+            <div class="schedule-location">Kediaman Mempelai Putri</div>
+            <button class="btn-location" data-animate>📍 Lokasi</button>
           </div>
         </div>
       </section>
 
       <!-- GALERI -->
-      <section class="section-gallery">
-        <div class="gallery-grid">
-          <!-- isi dengan foto-foto, boleh duplikat dulu -->
-          <img src="images/gallery-1.jpg" alt="">
-          <img src="images/gallery-2.jpg" alt="">
-          <img src="images/gallery-3.jpg" alt="">
-          <img src="images/gallery-4.jpg" alt="">
-          <img src="images/gallery-5.jpg" alt="">
-          <img src="images/gallery-6.jpg" alt="">
+      <section class="section-gallery" data-animate>
+        <div class="gallery-grid" data-animate>
+          <img src="images/gallery-1.jpg" alt="" data-animate>
+          <img src="images/gallery-2.jpg" alt="" data-animate>
+          <img src="images/gallery-3.jpg" alt="" data-animate>
+          <img src="images/gallery-4.jpg" alt="" data-animate>
+          <img src="images/gallery-5.jpg" alt="" data-animate>
+          <img src="images/gallery-6.jpg" alt="" data-animate>
         </div>
       </section>
 
-      <!-- GIFT / AMBLOP DIGITAL -->
-      <section class="section-gift">
-        <div class="gift-title">Your Gift to Us</div>
-        <p class="gift-text">
-          Kehadiran Bapak/Ibu/Saudara merupakan hadiah terbaik bagi kami.
-          Tetapi jika berkenan memberikan tanda kasih, kami sediakan rekening
-          berikut. Semoga keikhlasan, perhatian dan kebaikan akan dibalas
-          dengan rahmat dan rezeki berlimpah. Aamiin.
-        </p>
+      <!-- GIFT -->
+      <section class="section-gift" data-animate>
+        <div class="gift-title" data-animate>Your Gift to Us</div>
+        <p class="gift-text" data-animate">Kehadiran Bapak/Ibu/Saudara merupakan hadiah terbaik bagi kami.</p>
 
-        <div class="gift-boxes">
+        <div class="gift-boxes" data-animate>
           <div class="gift-cards">
-            <div class="gift-card bca">
+            <div class="gift-card bca" data-animate>
               <div class="gift-bank-name">BCA</div>
               <div class="gift-bank-no" id="bcaNo">3820145681</div>
-              <div class="gift-owner">a.n. Riesa Putri Febriani</div>
-              <button class="btn-copy" type="button" data-target="bcaNo" data-info="bcaInfo">Salin nomor BCA</button>
+              <div class="gift-owner">a.n. Riesa Putri Febziani</div>
+              <button class="btn-copy" data-target="bcaNo" data-info="bcaInfo" data-animate>Salin nomor BCA</button>
             </div>
 
-            <div class="gift-card bni">
+            <div class="gift-card bni" data-animate>
               <div class="gift-bank-name">BNI</div>
               <div class="gift-bank-no" id="bniNo">0622621535</div>
-              <div class="gift-owner">a.n. M. Lukmanul Hakim</div>
-              <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo">Salin nomor BNI</button>
+              <div class="gift-owner">a.n. Lukmannul Hakim</div>
+              <button class="btn-copy" data-target="bniNo" data-info="bniInfo" data-animate>Salin nomor BNI</button>
             </div>
           </div>
 
-          <div class="gift-note">
-            Jika terjadi salah data yang tidak kami sadari, maka permohonan
-            maaf adalah hadiah terbaik yang paling baik dan diterima.
-          </div>
+          <div class="gift-note" data-animate>Jika terjadi salah data yang tidak kami sadari, mohon maaf.</div>
           <div class="copy-info" id="bcaInfo">Nomor BCA tersalin ✔</div>
           <div class="copy-info" id="bniInfo">Nomor BNI tersalin ✔</div>
         </div>
       </section>
 
       <!-- THANKS -->
-      <section class="section-thanks">
-        <div class="thanks-title">Thanks You</div>
-        <p class="thanks-text">
-          Terima kasih atas doa dan kehadirannya dalam acara pernikahan kami.
-        </p>
-        <div class="footer">
-          &copy; 2025 — Riesa &amp; Lukman
-        </div>
+      <section class="section-thanks" data-animate>
+        <div class="thanks-title" data-animate>Thanks You</div>
+        <p class="thanks-text" data-animate>Terima kasih atas doa dan kehadirannya dalam acara pernikahan kami.</p>
+        <div class="footer" data-animate>&copy; 2025 — Riesa &amp; Lukman</div>
       </section>
 
     </div>
   </main>
 
+  <!-- ============ SCRIPTS ============ -->
   <script>
-    // buka amplop
-    const gateScreen = document.getElementById("gateScreen");
-    const envelopeOpen = document.getElementById("envelopeOpen");
-    const mainPage = document.getElementById("mainPage");
+    // ----- Envelope open animation + reveal page -----
+    const envelopeOpenBtn = document.getElementById('envelopeOpen');
+    const envelopeCard = document.getElementById('envelopeCard');
+    const gateScreen = document.getElementById('gateScreen');
+    const mainPage = document.getElementById('mainPage');
 
-    envelopeOpen.addEventListener("click", () => {
-      gateScreen.classList.add("hidden");
-      mainPage.classList.add("visible");
-      window.scrollTo({ top: 0 });
+    envelopeOpenBtn.addEventListener('click', () => {
+      envelopeCard.classList.add('open');
+      // wait for envelope animation then reveal page
+      setTimeout(() => {
+        gateScreen.classList.add('hidden');
+        mainPage.classList.add('visible');
+        // animate initial visible items
+        triggerInitialAnimations();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 520);
     });
 
-    // copy rekening
-    const copyButtons = document.querySelectorAll(".btn-copy");
+    // ----- copy rekening -----
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn-copy');
+      if (!btn) return;
+      const targetId = btn.getAttribute('data-target');
+      const infoId = btn.getAttribute('data-info');
+      const target = document.getElementById(targetId);
+      const infoEl = document.getElementById(infoId);
+      if (!target) return;
+      navigator.clipboard.writeText(target.textContent.trim())
+        .then(() => {
+          if (infoEl) { infoEl.style.display = 'block'; setTimeout(()=> infoEl.style.display = 'none', 1800); }
+        })
+        .catch(()=> alert('Gagal menyalin, silakan salin manual.'));
+    });
 
-    copyButtons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const targetId = btn.getAttribute("data-target");
-        const infoId = btn.getAttribute("data-info");
-        const targetEl = document.getElementById(targetId);
-        const infoEl = document.getElementById(infoId);
+    // ----- countdown -----
+    const targetDate = new Date("2025-12-12T08:00:00+07:00").getTime();
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        const cd = document.getElementById('countdown');
+        if (cd) cd.innerHTML = "<div style='color:#fff;font-size:0.95rem;'>Acara sedang berlangsung / telah selesai 💐</div>";
+        return;
+      }
+      const dayMs = 24*60*60*1000;
+      const hourMs = 60*60*1000;
+      const minMs = 60*1000;
 
-        if (!targetEl) return;
-        const textToCopy = targetEl.textContent.trim();
+      const days = Math.floor(diff / dayMs);
+      const hours = Math.floor((diff % dayMs) / hourMs);
+      const mins = Math.floor((diff % hourMs) / minMs);
+      const secs = Math.floor((diff % minMs) / 1000);
 
-        navigator.clipboard.writeText(textToCopy)
-          .then(() => {
-            if (infoEl) {
-              infoEl.style.display = "block";
-              setTimeout(() => infoEl.style.display = "none", 2000);
-            }
-          })
-          .catch(() => {
-            alert("Gagal menyalin nomor rekening. Silakan salin manual.");
+      document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+      document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+      document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+      document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ----- IntersectionObserver + staggered entrance -----
+    const ioOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.06 };
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        // if container has children with data-animate, stagger them
+        const children = Array.from(el.querySelectorAll('[data-animate]'));
+        if (children.length) {
+          children.forEach((ch, i) => {
+            ch.style.setProperty('--delay', `${i * 90}ms`);
+            ch.classList.add('in-view');
+            if (ch.matches('.btn-primary, .btn-location, .btn-copy')) ch.classList.add('pop');
           });
+        } else {
+          el.style.setProperty('--delay', el.dataset.delay || '0ms');
+          el.classList.add('in-view');
+        }
+        obs.unobserve(el);
       });
+    }, ioOptions);
+
+    // observe sections/cards that we want animated
+    document.querySelectorAll('section, .gallery-grid, .gift-card, .schedule-card, .intro-card').forEach(n => {
+      io.observe(n);
     });
+
+    // initial above-the-fold trigger
+    function triggerInitialAnimations() {
+      const initial = ['.hero-script', '.hero-save', '.hero-date-block'];
+      initial.forEach((sel,i) => {
+        const e = document.querySelector(sel);
+        if (!e) return;
+        e.style.setProperty('--delay', `${i * 90}ms`);
+        e.classList.add('in-view');
+      });
+
+      const cdBoxes = document.querySelectorAll('.countdown-box');
+      cdBoxes.forEach((b,i) => {
+        b.style.setProperty('--delay', `${220 + i * 90}ms`);
+        b.classList.add('in-view');
+      });
+
+      // reveal first sections (save + intro)
+      const first = document.querySelectorAll('.section-save, .section-intro');
+      first.forEach((c,i) => {
+        const kids = c.querySelectorAll('[data-animate]');
+        if (kids.length) {
+          kids.forEach((k,j) => { k.style.setProperty('--delay', `${340 + j * 80}ms`); k.classList.add('in-view'); });
+        } else {
+          c.style.setProperty('--delay', `${340 + i * 80}ms`); c.classList.add('in-view');
+        }
+      });
+    }
+
+    // accessibility: if user prefers reduced motion, skip animations (handled in CSS)
   </script>
 </body>
 </html>
