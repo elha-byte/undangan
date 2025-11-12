@@ -7,6 +7,8 @@
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Montserrat ditambahkan untuk Gift Card agar sesuai CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -18,7 +20,8 @@
 
     body {
       font-family: "Playfair Display", serif;
-      background: linear-gradient(135deg, #ffc4d0, #f7a6b0);
+      /* Background PINK SOLID */
+      background: #E84D74; 
       min-height: 100vh;
       color: #111;
     }
@@ -48,6 +51,8 @@
       text-align: center;
       z-index: 9999;
       transition: opacity 0.6s ease, visibility 0.6s ease;
+      /* Background PINK SOLID */
+      background: #E84D74;
     }
     .gate-screen.hidden {
       opacity: 0;
@@ -136,7 +141,7 @@
     }
 
     /* animate gallery images slightly faster */
-    .gallery-grid img[data-animate] {
+    .gallery-grid img.in-view {
       animation-duration: 420ms;
       animation-timing-function: cubic-bezier(.22,.9,.34,1);
     }
@@ -264,7 +269,8 @@
     .page-inner {
       max-width: 420px;   /* fokus HP */
       margin: 0 auto;
-      background: linear-gradient(180deg, #151515 0%, #ff7a5c 40%, #ff2f92 70%, #ff7a5c 100%);
+      /* Background dihapus, background body yang terlihat */
+      background: transparent;
       box-shadow: 0 0 40px rgba(0,0,0,0.25);
     }
 
@@ -285,6 +291,7 @@
       position: absolute;
       inset: 0;
       background: url("images/hero-stairs.png") center/cover no-repeat;
+      filter: brightness(0.7); /* Optional: Adjust brightness */
     }
 
     .hero-content {
@@ -307,12 +314,25 @@
 
     .hero-script {
       font-family: "Bintaro", cursive;
-      font-size: 2.8rem;
-      line-height: 1;
-      margin-top: 2.5rem;
+      font-size: 5rem; /* Massive script font */
+      line-height: 0.8; 
+      margin-top: 5rem; /* Move down */
+      margin-left: -0.5rem;
+      color: #ff2f92; /* Bright pink script */
+      text-align: center;
+      filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.2));
     }
     .hero-script span {
       display: block;
+    }
+    .hero-script span:nth-child(2) { 
+        font-family: "Playfair Display", serif;
+        font-size: 3rem;
+        display: inline-block;
+        margin: 0 0.5rem;
+        transform: translateY(-0.8rem);
+        color: #fff;
+        display: inline;
     }
 
     .hero-corner {
@@ -326,70 +346,83 @@
     }
 
     /* overlay SAVE THE DATE + tanggal di bagian bawah hero */
-    .hero-save {
-      position: absolute;
-      left: 1.3rem;
-      bottom: 2rem;
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #fff;
-      text-align: left;
-    }
-
+    
+    /* Tanggal (angka besar) di KANAN, Rata KIRI */
     .hero-date-block {
       position: absolute;
-      right: 1.3rem;
-      bottom: 1.6rem;
-      text-align: right;
+      right: 1.3rem; 
+      bottom: 1rem; 
+      text-align: left; 
       font-weight: 700;
-      font-size: 1.6rem;
-      line-height: 1.1;
+      font-size: 3.5rem; 
+      line-height: 0.72; 
       color: #fff;
     }
     .hero-date-block span {
       display: block;
     }
 
+    /* SAVE THE DATE (teks kecil) di KIRI, Rata KANAN */
+    .hero-save {
+      position: absolute;
+      left: 4rem; 
+      bottom: 3.9rem; 
+      font-size: 1rem; 
+      letter-spacing: 0.28em; 
+      text-transform: uppercase;
+      color: #fff;
+      text-align: right; 
+      line-height: 1.2; 
+    }
+    
+
+
     /* ========== SAVE THE DATE + COUNTDOWN (SECTION BAWAH HERO) ========== */
 
     .section-save {
-      padding: 2rem 1.5rem 2.4rem;
+      padding: 3rem 1.5rem 3rem;
       text-align: center;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
+      /* Background PINK SOLID */
+      background: #E84D74;
+      position: relative;
     }
-
+    /* New: The white banner wrap for countdown */
+    .countdown-wrapper {
+        background: #fff;
+        border-radius: 999px;
+        box-shadow: 0 16px 30px rgba(0,0,0,0.22);
+        padding: 0.8rem 1rem;
+        position: relative;
+        max-width: 360px;
+        margin: 0 auto 1.5rem;
+    }
     .countdown {
       display: flex;
       justify-content: center;
       gap: 0.6rem;
-      margin: 0 auto 1.4rem;
-      max-width: 320px;
+      margin: 0 auto;
+      max-width: none;
     }
-
     .countdown-box {
       flex: 1;
       min-width: 60px;
-      background: rgba(255,255,255,0.18);
+      background: transparent;
       border-radius: 0.9rem;
-      padding: 0.6rem 0.3rem;
-      border: 1px solid rgba(255,255,255,0.5);
+      padding: 0.2rem 0.3rem;
+      border: none;
     }
-
     .countdown-number {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
-      color: #fff;
+      color: #111;
       display: block;
     }
-
     .countdown-label {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.05em;
+      color: #555;
     }
-
     .btn-primary {
       display: inline-block;
       padding: 0.7rem 1.8rem;
@@ -402,92 +435,126 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
       cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-top: 1rem;
     }
 
     /* ========== DOA & NAMA PENGANTIN ========== */
 
     .section-intro {
       padding: 2.2rem 1.5rem;
-      background: linear-gradient(180deg, #ff2f92, #ff7a5c);
-      color: #fff;
+      /* Background PINK SOLID */
+      background: #E84D74;
+      color: #111; /* Text color inside section */
       text-align: center;
     }
 
     .intro-bismi {
       font-family: "Bintaro", cursive;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       margin-bottom: 0.8rem;
+      color: #111;
     }
 
     .intro-text {
       font-size: 0.9rem;
       line-height: 1.7;
       margin-bottom: 2rem;
+      color: #111;
     }
 
     .intro-card {
       background: #fff;
       color: #111;
-      border-radius: 1.4rem;
-      padding: 1.3rem 1.2rem 1.6rem;
+      border-radius: 2rem;
+      padding: 1.8rem 1.2rem 1.6rem;
       box-shadow: 0 16px 30px rgba(0,0,0,0.18);
+      position: relative;
     }
 
     .intro-photo {
       border-radius: 1rem;
       overflow: hidden;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .intro-names {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
+      flex-direction: column;
+      gap: 1.5rem;
       margin-bottom: 0.8rem;
+      position: relative; 
+      z-index: 20;
     }
-    .intro-names span {
-      display: block;
+    .intro-names > div {
+      padding: 0 1rem;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 1.4rem;
+      padding: 1rem;
     }
+    
+    .intro-names span { display: block; }
+    
     .intro-name-big {
-      font-weight: 700;
-      font-size: 0.9rem;
+      font-family: "Bintaro", cursive;
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: #ff2f92;
+      line-height: 1.1;
     }
     .intro-and {
-      font-size: 1.4rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 6rem;
       font-weight: 700;
-      color: #ff2f92;
+      color: #ffc4d0; 
+      z-index: 10;
+      pointer-events: none;
     }
 
     .intro-detail {
-      font-size: 0.75rem;
-      line-height: 1.5;
-      margin-bottom: 0.5rem;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      margin-top: 0.3rem;
+      font-weight: 500;
+      color: #333;
     }
 
     .intro-invite {
-      margin-top: 0.8rem;
+      margin-top: 2rem;
       font-size: 0.85rem;
       line-height: 1.6;
+      color: #111; 
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* ========== JADWAL ACARA ========== */
 
     .section-schedule {
       padding: 2.4rem 1.5rem 2.6rem;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
-      color: #fff;
+      /* Background PINK SOLID */
+      background: #E84D74;
+      color: #111; /* Text color inside section */
       text-align: center;
     }
 
     .schedule-date-label {
       font-family: "Bintaro", cursive;
-      font-size: 1.4rem;
+      font-size: 2.2rem;
+      line-height: 1;
+      color: #111;
+      margin-bottom: 0.1rem;
     }
     .schedule-date-main {
-      margin-top: 0.3rem;
-      font-size: 1.2rem;
+      margin-top: 0;
+      font-size: 1.8rem;
       font-weight: 700;
+      color: #111;
+      margin-bottom: 1rem;
     }
 
     .schedule-cards {
@@ -497,23 +564,24 @@
     }
 
     .schedule-card {
-      background: rgba(255,255,255,0.15);
-      border-radius: 1.4rem;
-      padding: 1.1rem 1rem 1.3rem;
+      background: rgba(255,255,255,0.8);
+      color: #111;
+      border-radius: 1.8rem;
+      padding: 1.4rem 1rem 1.6rem;
       box-shadow: 0 16px 30px rgba(0,0,0,0.22);
     }
 
     .schedule-card-title {
-      font-size: 1rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
     }
     .schedule-card-inner {
-      background: #fff;
+      background: #ffc4d0;
       color: #111;
       border-radius: 0.9rem;
-      padding: 0.7rem 0.6rem;
-      font-size: 0.78rem;
+      padding: 0.8rem 0.6rem;
+      font-size: 0.85rem;
       line-height: 1.5;
     }
 
@@ -534,13 +602,15 @@
       cursor: pointer;
       background: #fff;
       color: #ff2f92;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     /* ========== GALERI ========== */
 
     .section-gallery {
       padding: 2.2rem 1rem 2.4rem;
-      background: #ff7a5c;
+      /* Background PINK SOLID */
+      background: #E84D74;
     }
 
     .gallery-grid {
@@ -562,15 +632,16 @@
 
     .section-gift {
       padding: 2.4rem 1.5rem 2.6rem;
-      background: #ff7a5c;
-      color: #fff;
+      /* Background PINK SOLID */
+      background: #E84D74;
+      color: #111;
       text-align: center;
     }
-
     .gift-title {
       font-family: "Bintaro", cursive;
-      font-size: 1.6rem;
-      margin-bottom: 0.6rem;
+      font-size: 2rem; 
+      margin-bottom: 0.8rem;
+      color: #111; 
     }
 
     .gift-text {
@@ -578,8 +649,9 @@
       line-height: 1.7;
       max-width: 360px;
       margin: 0 auto 1.4rem;
+      color: #111;
     }
-
+    
     .gift-boxes {
       background: #fff;
       border-radius: 1.4rem;
@@ -589,12 +661,10 @@
       margin: 0 auto;
       color: #111;
     }
-
     .gift-cards {
       display: grid;
       gap: 0.9rem;
     }
-
     .gift-card {
       border-radius: 1rem;
       padding: 0.9rem 1rem;
@@ -603,16 +673,16 @@
       font-size: 0.85rem;
       position: relative;
       overflow: hidden;
-    }
-    .gift-card {
       font-family: "Montserrat", sans-serif;
     }
-
+    
     .gift-card.bca {
-      background: linear-gradient(135deg, #0044a3, #006edc);
+      /* SOLID BLUE */
+      background: #0044a3; 
     }
     .gift-card.bni {
-      background: linear-gradient(135deg, #ff7a1c, #ff4f48);
+      /* SOLID TEAL/GREENISH */
+      background: #008080;
     }
 
     .gift-bank-name {
@@ -663,27 +733,31 @@
 
     .section-thanks {
       padding: 2.4rem 1.5rem 2.8rem;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
+      /* Background PINK SOLID */
+      background: #E84D74;
       text-align: center;
-      color: #fff;
+      color: #111;
     }
 
     .thanks-title {
       font-family: "Bintaro", cursive;
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      color: #111;
     }
 
     .thanks-text {
       font-size: 0.8rem;
       max-width: 320px;
       margin: 0 auto;
+      color: #111;
     }
 
     .footer {
       margin-top: 1rem;
       font-size: 0.75rem;
       opacity: 0.9;
+      color: #111;
     }
   </style>
 </head>
@@ -726,7 +800,7 @@
         <div class="hero-content">
           <div class="hero-tag">WEDDING OF</div>
 
-          <div class="hero-script"data-animate>
+          <div class="hero-script" data-animate>
             <span>Riesa</span>
             <span>&amp;</span>
             <span>Lukman</span>
@@ -734,11 +808,11 @@
         </div>
 
         <!-- overlay save the date + tanggal, nempel di foto, posisinya di bawah -->
-        <div class="hero-save"data-animate>
+        <div class="hero-save" data-animate data-delay="100ms">
           SAVE<br>THE<br>DATE
         </div>
 
-        <div class="hero-date-block">
+        <div class="hero-date-block" data-animate data-delay="200ms">
           <span>12.</span>
           <span>12.</span>
           <span>2025.</span>
@@ -746,55 +820,55 @@
       </section>
 
       <!-- SAVE THE DATE + COUNTDOWN -->
-      <section class="section-save">
-        <div class="countdown" id="countdown">
-          <div class="countdown-box">
-            <span class="countdown-number" id="cd-days">00</span>
-            <span class="countdown-label">Hari</span>
-          </div>
-          <div class="countdown-box">
-            <span class="countdown-number" id="cd-hours">00</span>
-            <span class="countdown-label">Jam</span>
-          </div>
-          <div class="countdown-box">
-            <span class="countdown-number" id="cd-mins">00</span>
-            <span class="countdown-label">Menit</span>
-          </div>
-          <div class="countdown-box">
-            <span class="countdown-number" id="cd-secs">00</span>
-            <span class="countdown-label">Detik</span>
+      <section class="section-save" data-stagger-container>
+        <div class="countdown-wrapper">
+          <div class="countdown" id="countdown">
+            <div class="countdown-box"  data-animate>
+              <span class="countdown-number" id="cd-days">00</span>
+              <span class="countdown-label">Hari</span>
+            </div>
+            <div class="countdown-box"  data-animate>
+              <span class="countdown-number" id="cd-hours">00</span>
+              <span class="countdown-label">Jam</span>
+            </div>
+            <div class="countdown-box"  data-animate>
+              <span class="countdown-number" id="cd-mins">00</span>
+              <span class="countdown-label">Menit</span>
+            </div>
+            <div class="countdown-box"  data-animate>
+              <span class="countdown-number" id="cd-secs">00</span>
+              <span class="countdown-label">Detik</span>
+            </div>
           </div>
         </div>
-
-        <button class="btn-primary" type="button">
+        <button class="btn-primary" type="button" data-animate data-delay="300ms">
           Save The Date
         </button>
       </section>
 
       <!-- DOA & NAMA PENGANTIN -->
-      <section class="section-intro">
-        <div class="intro-bismi">Bismillahirrahmanirrahim</div>
-        <p class="intro-text">
+      <section class="section-intro" data-stagger-container>
+        <div class="intro-bismi" data-animate>Bismillahirrahmanirrahim</div>
+        <p class="intro-text" data-animate data-delay="100ms">
           Maha Suci Allah SWT yang telah menciptakan makhluk-Nya berpasang-pasangan.
           Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
         </p>
 
-        <div class="intro-card">
+        <div class="intro-card" data-animate data-delay="200ms">
           <div class="intro-photo">
             <!-- foto berdua -->
             <img src="images/couple-card.jpg" alt="Riesa dan Lukman">
           </div>
-
+          <div class="intro-and">&amp;</div> 
           <div class="intro-names">
-            <div>
+            <div data-animate data-delay="300ms">
               <span class="intro-name-big">M. Lukmannul Hakim</span>
               <span class="intro-detail">
                 Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
                 (Jl Wilis No.69 Podosugih, Pekalongan Barat)
               </span>
             </div>
-            <div class="intro-and">&amp;</div>
-            <div>
+            <div data-animate data-delay="500ms">
               <span class="intro-name-big">Riesa Putri Febziani</span>
               <span class="intro-detail">
                 Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
@@ -802,13 +876,12 @@
               </span>
             </div>
           </div>
-
-          <p class="intro-invite">
+        </div>
+          <p class="intro-invite" data-animate data-delay="700ms">
             Dengan penuh rasa hormat kami mengharapkan kehadiran
             Bapak/Ibu/Saudara sekalian pada Acara Pernikahan kami
             yang akan kami laksanakan pada:
           </p>
-        </div>
       </section>
 
       <!-- JADWAL ACARA -->
@@ -817,7 +890,7 @@
         <div class="schedule-date-main">12 Desember 2025</div>
 
         <div class="schedule-cards">
-          <div class="schedule-card">
+          <div class="schedule-card" data-animate>
             <div class="schedule-card-title">AKAD NIKAH</div>
             <div class="schedule-card-inner">
               Jumat, 12 Desember 2025<br>
@@ -828,12 +901,12 @@
               Gg. Pamsimas, Sapuro Indah<br>
               Pekalongan Barat
             </div>
-            <button class="btn-location" type="button">
+            <button class="btn-location" type="button" data-animate>
               <span>📍</span> <span>Lokasi</span>
             </button>
           </div>
 
-          <div class="schedule-card">
+          <div class="schedule-card" data-animate>
             <div class="schedule-card-title">RESEPSI</div>
             <div class="schedule-card-inner">
               Jumat, 12 Desember 2025<br>
@@ -844,7 +917,7 @@
               Gg. Pamsimas, Sapuro Indah<br>
               Pekalongan Barat
             </div>
-            <button class="btn-location" type="button">
+            <button class="btn-location" type="button" data-animate>
               <span>📍</span> <span>Lokasi</span>
             </button>
           </div>
@@ -852,41 +925,41 @@
       </section>
 
       <!-- GALERI -->
-      <section class="section-gallery">
+      <section class="section-gallery" data-stagger-container>
         <div class="gallery-grid">
-          <img src="images/gallery-1.jpg" alt="">
-          <img src="images/gallery-2.jpg" alt="">
-          <img src="images/gallery-3.jpg" alt="">
-          <img src="images/gallery-4.jpg" alt="">
-          <img src="images/gallery-5.jpg" alt="">
-          <img src="images/gallery-6.jpg" alt="">
+          <img src="images/gallery-1.jpg" alt="" data-animate>
+          <img src="images/gallery-2.jpg" alt="" data-animate>
+          <img src="images/gallery-3.jpg" alt="" data-animate>
+          <img src="images/gallery-4.jpg" alt="" data-animate>
+          <img src="images/gallery-5.jpg" alt="" data-animate>
+          <img src="images/gallery-6.jpg" alt="" data-animate>
         </div>
       </section>
 
       <!-- GIFT / AMBLOP DIGITAL -->
-      <section class="section-gift">
-        <div class="gift-title">Your Gift to Us</div>
-        <p class="gift-text">
+      <section class="section-gift" data-stagger-container>
+        <div class="gift-title" data-animate>Your Gift to Us</div>
+        <p class="gift-text" data-animate data-delay="100ms">
           Kehadiran Bapak/Ibu/Saudara merupakan hadiah terbaik bagi kami.
           Namun jika berkenan memberikan tanda kasih, kami sediakan rekening
           berikut. Semoga keikhlasan, perhatian dan kebaikan akan dibalas
           dengan rahmat dan rezeki berlimpah. Aamiin.
         </p>
 
-        <div class="gift-boxes">
+        <div class="gift-boxes" data-animate data-delay="200ms">
           <div class="gift-cards">
             <div class="gift-card bca">
               <div class="gift-bank-name">BCA</div>
               <div class="gift-bank-no" id="bcaNo">3820145681</div>
               <div class="gift-owner">a.n. Riesa Putri Febziani</div>
-              <button class="btn-copy" type="button" data-target="bcaNo" data-info="bcaInfo">Salin nomor BCA</button>
+              <button class="btn-copy" type="button" data-target="bcaNo" data-info="bcaInfo" data-animate data-delay="300ms">Salin nomor BCA</button>
             </div>
 
             <div class="gift-card bni">
               <div class="gift-bank-name">BNI</div>
               <div class="gift-bank-no" id="bniNo">0622621535</div>
               <div class="gift-owner">a.n. Lukmannul Hakim</div>
-              <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo">Salin nomor BNI</button>
+              <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo" data-animate data-delay="500ms">Salin nomor BNI</button>
             </div>
           </div>
 
@@ -900,12 +973,12 @@
       </section>
 
       <!-- THANKS -->
-      <section class="section-thanks">
-        <div class="thanks-title">Thanks You</div>
-        <p class="thanks-text">
+      <section class="section-thanks" data-stagger-container>
+        <div class="thanks-title" data-animate>Thanks You</div>
+        <p class="thanks-text" data-animate data-delay="100ms">
           Terima kasih atas doa dan kehadirannya dalam acara pernikahan kami.
         </p>
-        <div class="footer">
+        <div class="footer" data-animate data-delay="200ms">
           &copy; 2025 — Riesa &amp; Lukman
         </div>
       </section>
@@ -915,15 +988,67 @@
 
   <script>
     // buka amplop
-    const gateScreen = document.getElementById("gateScreen");
-    const envelopeOpen = document.getElementById("envelopeOpen");
-    const mainPage = document.getElementById("mainPage");
+/* ----- Envelope open with flap animation + reveal main page with animations ----- */
+    const envelope = document.querySelector('.envelope-card');
+    const gateScreenEl = document.getElementById('gateScreen');
+    const mainPageEl = document.getElementById('mainPage');
 
-    envelopeOpen.addEventListener("click", () => {
-      gateScreen.classList.add("hidden");
-      mainPage.classList.add("visible");
-      window.scrollTo({ top: 0 });
+    document.getElementById('envelopeOpen').addEventListener('click', () => {
+      // animate flap + shrink envelope
+      envelope.classList.add('open');
+
+      // wait animation then hide gate and show page
+      setTimeout(() => {
+       gateScreenEl.classList.add('hidden');
+        mainPageEl.classList.add('visible');
+        // scroll to top (safety)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 520); // match CSS duration
     });
+
+    /* ----- IntersectionObserver for on-scroll entrance with stagger (REVISED) ----- */
+
+    const observerOptions = { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.1 }; // Margin disesuaikan agar trigger lebih cepat
+    
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          
+          // 1. Cek apakah elemen itu sendiri adalah elemen yang dianimasikan
+          if (el.matches('[data-animate]')) {
+             el.classList.add('in-view');
+             if (el.matches('.btn-primary, .btn-location, .btn-copy, .countdown-box')) el.classList.add('pop');
+          }
+          
+          // 2. Cek untuk staggered children (jika elemen adalah kontainer)
+          const children = Array.from(el.querySelectorAll('[data-animate]'));
+          
+          if (children.length) {
+            children.forEach((child, i) => {
+              // Cek apakah child sudah memiliki delay manual (dari HTML), jika tidak, berikan delay stagger
+              if (!child.dataset.delay) {
+                child.style.setProperty('--delay', `${i * 90}ms`);
+              }
+              child.classList.add('in-view');
+              // Tambahkan pop class untuk elemen kecil/tombol
+              if (child.matches('.btn-primary, .btn-location, .btn-copy, .countdown-box')) child.classList.add('pop');
+             });
+          }
+          
+          io.unobserve(el); // Animasi sekali
+        }
+      });
+     }, observerOptions);
+
+    // Kumpulkan semua elemen yang perlu diamati.
+    document.querySelectorAll('[data-animate], .section-save, .section-intro, .section-schedule, .section-gallery, .section-gift, .section-thanks').forEach(node => {
+        // Hero section tidak perlu diobservasi sebagai kontainer karena elemennya sudah diobservasi individual di bawah.
+        if (!node.classList.contains('hero')) {
+             io.observe(node);
+        }
+    });
+
 
     // copy rekening
     const copyButtons = document.querySelectorAll(".btn-copy");
@@ -938,6 +1063,7 @@
         if (!targetEl) return;
         const textToCopy = targetEl.textContent.trim();
 
+        // Menggunakan navigator.clipboard (membutuhkan HTTPS)
         navigator.clipboard.writeText(textToCopy)
           .then(() => {
             if (infoEl) {
@@ -981,94 +1107,7 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
-    /* ----- Envelope open with flap animation + reveal main page with animations ----- */
-const envelope = document.querySelector('.envelope-card');
-const gateScreenEl = document.getElementById('gateScreen');
-const mainPageEl = document.getElementById('mainPage');
-
-document.getElementById('envelopeOpen').addEventListener('click', () => {
-  // animate flap + shrink envelope
-  envelope.classList.add('open');
-
-  // wait animation then hide gate and show page
-  setTimeout(() => {
-    gateScreenEl.classList.add('hidden');
-    mainPageEl.classList.add('visible');
-    // after page visible, trigger initial entrance animations for above-the-fold
-    triggerInitialAnimations();
-    // scroll to top (safety)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, 520); // match CSS duration
-});
-
-/* ----- IntersectionObserver for on-scroll entrance with stagger ----- */
-
-const observerOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.08 };
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      // if the element is a container with children that are data-animate, stagger them
-      const children = Array.from(el.querySelectorAll('[data-animate]'));
-      if (children.length) {
-        children.forEach((child, i) => {
-          child.style.setProperty('--delay', `${i * 90}ms`);
-          child.classList.add('in-view');
-          // optional shorter pop for small items
-          if (child.matches('.btn-primary, .btn-location, .btn-copy')) child.classList.add('pop');
-        });
-      } else {
-        // single element
-        el.style.setProperty('--delay', el.dataset.delay || '0ms');
-        el.classList.add('in-view');
-      }
-      io.unobserve(el); // animate once
-    }
-  });
-}, observerOptions);
-
-// observe high-level blocks and also individual elements that have data-animate
-document.querySelectorAll('section, .card, .schedule-card, .gift-card, .gallery-grid, .intro-card, .hero-script, .hero-save, .hero-date-block').forEach(node => {
-  // only observe if element or its children use data-animate, or we force animate entire node
-  if (node.querySelector('[data-animate]') || node.matches('[data-animate]') || node.classList.contains('card') || node.tagName.toLowerCase() === 'section') {
-    io.observe(node);
-  }
-});
-
-/* trigger some initial above-fold items manually (hero, overlay, etc.) */
-function triggerInitialAnimations() {
-  const heroItems = ['.hero-script', '.hero-save', '.hero-date-block'];
-  heroItems.forEach((sel, i) => {
-    const el = document.querySelector(sel);
-    if (!el) return;
-    el.style.setProperty('--delay', `${i * 90}ms`);
-    el.classList.add('in-view');
-  });
-
-  // countdown boxes: stagger
-  const cdBoxes = document.querySelectorAll('.countdown-box');
-  cdBoxes.forEach((b, i) => {
-    b.style.setProperty('--delay', `${200 + i * 90}ms`);
-    b.classList.add('in-view');
-  });
-
-  // reveal first section(s)
-  const firstCards = document.querySelectorAll('.section-save, .section-intro');
-  firstCards.forEach((c, i) => {
-    // reveal the container and its children
-    const children = c.querySelectorAll('[data-animate]');
-    if (children.length) {
-      children.forEach((ch, j) => {
-        ch.style.setProperty('--delay', `${340 + j * 85}ms`);
-        ch.classList.add('in-view');
-      });
-    } else {
-      c.style.setProperty('--delay', `${340 + i * 85}ms`);
-      c.classList.add('in-view');
-    }
-  });
-}
-
+    
   </script>
 </body>
 </html>
