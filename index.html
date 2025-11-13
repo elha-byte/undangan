@@ -21,7 +21,7 @@
     body {
       font-family: "Playfair Display", serif;
       /* Background PINK SOLID */
-      background: #E84D74; 
+      background: #f78fa9; 
       min-height: 100vh;
       color: #111;
     }
@@ -52,7 +52,7 @@
       z-index: 9999;
       transition: opacity 0.6s ease, visibility 0.6s ease;
       /* Background PINK SOLID */
-      background: #E84D74;
+      background: #f78fa9;
     }
     .gate-screen.hidden {
       opacity: 0;
@@ -81,7 +81,7 @@
     .envelope-flap {
       position: relative;
       height: 90px;
-      background: linear-gradient(90deg, #ff7a5c, #ff2f92);
+      background: linear-gradient(45deg, #ff7a5c, #ff2f92);
       border-bottom-left-radius: 40px;
       border-bottom-right-radius: 40px;
       display: flex;
@@ -291,7 +291,8 @@
       position: absolute;
       inset: 0;
       background: url("images/hero-stairs.png") center/cover no-repeat;
-      filter: brightness(0.7); /* Optional: Adjust brightness */
+      max-width: 100%; /* Memastikan gambar tidak melebihi lebar kontainernya */
+      height: auto;    /* Menjaga aspek rasio (proporsi) gambar secara otomatis */
     }
 
     .hero-content {
@@ -318,7 +319,7 @@
       line-height: 0.8; 
       margin-top: 5rem; /* Move down */
       margin-left: -0.5rem;
-      color: #ff2f92; /* Bright pink script */
+      color: #f78fa9; /* Bright pink script */
       text-align: center;
       filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.2));
     }
@@ -341,7 +342,7 @@
       right: 0;
       width: 90px;
       height: 90px;
-      background: linear-gradient(180deg, #ff7a5c, #ff2f92);
+      background: linear-gradient(130deg, #ff7a5c, #ff2f92);
       border-bottom-left-radius: 80px;
     }
 
@@ -383,7 +384,7 @@
       padding: 3rem 1.5rem 3rem;
       text-align: center;
       /* Background PINK SOLID */
-      background: #E84D74;
+      background: #f78fa9;
       position: relative;
     }
     /* New: The white banner wrap for countdown */
@@ -428,9 +429,9 @@
       padding: 0.7rem 1.8rem;
       border-radius: 999px;
       border: none;
-      background: #fff;
-      color: #ff2f92;
-      font-size: 0.9rem;
+      background: linear-gradient(45deg, #ff7a5c, #ff2f92);
+      color: #ffffff;
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -444,14 +445,14 @@
     .section-intro {
       padding: 2.2rem 1.5rem;
       /* Background PINK SOLID */
-      background: #E84D74;
+      background: #f78fa9;
       color: #111; /* Text color inside section */
       text-align: center;
     }
 
     .intro-bismi {
       font-family: "Bintaro", cursive;
-      font-size: 1.8rem;
+      font-size: 2.9rem;
       margin-bottom: 0.8rem;
       color: #111;
     }
@@ -499,7 +500,7 @@
       font-family: "Bintaro", cursive;
       font-size: 2.2rem;
       font-weight: 400;
-      color: #ff2f92;
+      color: #f78fa9;
       line-height: 1.1;
     }
     .intro-and {
@@ -537,14 +538,14 @@
     .section-schedule {
       padding: 2.4rem 1.5rem 2.6rem;
       /* Background PINK SOLID */
-      background: #E84D74;
+      background: #f78fa9;
       color: #111; /* Text color inside section */
       text-align: center;
     }
 
     .schedule-date-label {
       font-family: "Bintaro", cursive;
-      font-size: 2.2rem;
+      font-size: 3rem;
       line-height: 1;
       color: #111;
       margin-bottom: 0.1rem;
@@ -564,24 +565,25 @@
     }
 
     .schedule-card {
-      background: rgba(255,255,255,0.8);
-      color: #111;
+      background:linear-gradient(45deg, #ff7a5c, #ff2f92);
+      color: #ffffff;
       border-radius: 1.8rem;
       padding: 1.4rem 1rem 1.6rem;
       box-shadow: 0 16px 30px rgba(0,0,0,0.22);
     }
 
     .schedule-card-title {
-      font-size: 1.1rem;
-      font-weight: 700;
+      font-size: 1.8rem;
+      font-weight: 600;
       margin-bottom: 0.8rem;
     }
     .schedule-card-inner {
-      background: #ffc4d0;
+      background: #ffffff;
       color: #111;
       border-radius: 0.9rem;
       padding: 0.8rem 0.6rem;
-      font-size: 0.85rem;
+      font-size: 1rem;
+      font-weight: 300;
       line-height: 1.5;
     }
 
@@ -601,7 +603,7 @@
       gap: 0.4rem;
       cursor: pointer;
       background: #fff;
-      color: #ff2f92;
+      color: #000000;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
@@ -610,7 +612,7 @@
     .section-gallery {
       padding: 2.2rem 1rem 2.4rem;
       /* Background PINK SOLID */
-      background: #E84D74;
+      background: #f78fa9;
     }
 
     .gallery-grid {
@@ -633,13 +635,13 @@
     .section-gift {
       padding: 2.4rem 1.5rem 2.6rem;
       /* Background PINK SOLID */
-      background: #E84D74;
+      background: #f78fa9;
       color: #111;
       text-align: center;
     }
     .gift-title {
       font-family: "Bintaro", cursive;
-      font-size: 2rem; 
+      font-size: 3rem; 
       margin-bottom: 0.8rem;
       color: #111; 
     }
@@ -678,11 +680,11 @@
     
     .gift-card.bca {
       /* SOLID BLUE */
-      background: #0044a3; 
+      background: linear-gradient(45deg, #0c284e, #0044a3);
     }
     .gift-card.bni {
       /* SOLID TEAL/GREENISH */
-      background: #008080;
+      background: linear-gradient(45deg, #55c7c7, #008080);
     }
 
     .gift-bank-name {
@@ -734,7 +736,7 @@
     .section-thanks {
       padding: 2.4rem 1.5rem 2.8rem;
       /* Background PINK SOLID */
-      background: #E84D74;
+      background: #f78fa9;
       text-align: center;
       color: #111;
     }
