@@ -283,14 +283,15 @@
     .hero {
       position: relative;
       min-height: 640px;
-      background: #fcc5d2;
       overflow: hidden;
     }
 
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url("images/hero-stairs.png") center/contain no-repeat;
+      background: url("images/hero-stairs.png") center/cover no-repeat;
+      max-width: 100%; /* Memastikan gambar tidak melebihi lebar kontainernya */
+      height: auto;    /* Menjaga aspek rasio (proporsi) gambar secara otomatis */
     }
 
     .hero-content {
