@@ -287,10 +287,17 @@
       overflow: hidden;
     }
 
-    .hero-bg {
+    .hero-bg-img {
       position: absolute;
       inset: 0;
-      background: url("images/hero-stairs.png") top center/cover no-repeat;
+      width: 100%;  /* Pastikan gambar mengisi lebar kontainer */
+      height: 100%; /* Pastikan gambar mengisi tinggi kontainer */
+  
+  /* Ini adalah properti kuncinya! Ganti 'cover' dengan 'contain' */
+      object-fit: contain; /* atau 'cover' jika ingin kembali seperti semula */
+
+  /* Opsional: Mengatur posisi gambar di dalam frame-nya */
+      object-position: center; 
     }
 
     .hero-content {
@@ -794,7 +801,7 @@
 
       <!-- HERO -->
       <section class="hero">
-        <div class="hero-bg"></div>
+        <img src="images/hero-stairs.png" alt="Foto Riesa dan Lukman di tangga" class="hero-bg-img">
         <div class="hero-corner"></div>
 
         <div class="hero-content">
