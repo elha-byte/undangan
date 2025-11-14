@@ -289,7 +289,6 @@
 
     .hero-bg-img {
       position: absolute;
-      top: 0;
       inset: 0;
       width: 100%;  /* Pastikan gambar mengisi lebar kontainer */
       height: 100%; /* Pastikan gambar mengisi tinggi kontainer */
@@ -298,8 +297,7 @@
       object-fit: contain; /* atau 'cover' jika ingin kembali seperti semula */
 
   /* Opsional: Mengatur posisi gambar di dalam frame-nya */
-      object-position: center; 
-      z-index : -1;
+      object-position: top center; 
     }
 
     .hero-content {
