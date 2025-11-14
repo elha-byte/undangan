@@ -283,21 +283,14 @@
     .hero {
       position: relative;
       min-height: 640px;
-      background: #f78fa9;
+      background: #000;
       overflow: hidden;
     }
 
-    .hero-bg-img {
+    .hero-bg {
       position: absolute;
       inset: 0;
-      width: 100%;  /* Pastikan gambar mengisi lebar kontainer */
-      height: 100%; /* Pastikan gambar mengisi tinggi kontainer */
-  
-  /* Ini adalah properti kuncinya! Ganti 'cover' dengan 'contain' */
-      object-fit: contain; /* atau 'cover' jika ingin kembali seperti semula */
-
-  /* Opsional: Mengatur posisi gambar di dalam frame-nya */
-      object-position: top center; 
+      background: url("images/hero-stairs.png") center/contain no-repeat;
     }
 
     .hero-content {
@@ -345,8 +338,8 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 40px;
-      height: 40px;
+      width: 90px;
+      height: 90px;
       background: linear-gradient(130deg, #ff7a5c, #ff2f92);
       border-bottom-left-radius: 80px;
     }
@@ -357,7 +350,7 @@
     .hero-date-block {
       position: absolute;
       right: 1.3rem; 
-      bottom: 3rem; 
+      bottom: 1rem; 
       text-align: left; 
       font-weight: 700;
       font-size: 3.5rem; 
@@ -371,7 +364,7 @@
     /* SAVE THE DATE (teks kecil) di KIRI, Rata KANAN */
     .hero-save {
       position: absolute;
-      left: 2rem; 
+      left: 4rem; 
       bottom: 3.9rem; 
       font-size: 1rem; 
       letter-spacing: 0.28em; 
@@ -801,16 +794,16 @@
 
       <!-- HERO -->
       <section class="hero">
-        <img src="images/hero-stairs.png" alt="Foto Riesa dan Lukman di tangga" class="hero-bg-img">
+        <div class="hero-bg"></div>
         <div class="hero-corner"></div>
 
         <div class="hero-content">
           <div class="hero-tag">WEDDING OF</div>
 
           <div class="hero-script" data-animate>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span>Riesa</span>
+            <span>&amp;</span>
+            <span>Lukman</span>
           </div>
         </div>
 
