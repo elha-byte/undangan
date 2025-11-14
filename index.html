@@ -21,7 +21,7 @@
     body {
       font-family: "Playfair Display", serif;
       /* Background PINK SOLID */
-      background: #f78fa9; 
+      background: #fcc5d2; 
       min-height: 100vh;
       color: #111;
     }
@@ -52,7 +52,7 @@
       z-index: 9999;
       transition: opacity 0.6s ease, visibility 0.6s ease;
       /* Background PINK SOLID */
-      background: #f78fa9;
+      background: #fcc5d2;
     }
     .gate-screen.hidden {
       opacity: 0;
@@ -283,7 +283,7 @@
     .hero {
       position: relative;
       min-height: 640px;
-      background: #000;
+      background: #fcc5d2;
       overflow: hidden;
     }
 
@@ -317,7 +317,7 @@
       line-height: 0.8; 
       margin-top: 5rem; /* Move down */
       margin-left: -0.5rem;
-      color: #f78fa9; /* Bright pink script */
+      color: #fcc5d2; /* Bright pink script */
       text-align: center;
       filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.2));
     }
@@ -338,8 +338,8 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 90px;
-      height: 90px;
+      width: 50px;
+      height: 50px;
       background: linear-gradient(130deg, #ff7a5c, #ff2f92);
       border-bottom-left-radius: 80px;
     }
@@ -349,11 +349,11 @@
     /* Tanggal (angka besar) di KANAN, Rata KIRI */
     .hero-date-block {
       position: absolute;
-      right: 1.3rem; 
-      bottom: 1rem; 
+      right: 1.6rem; 
+      bottom: 3rem; 
       text-align: left; 
       font-weight: 700;
-      font-size: 3.5rem; 
+      font-size: 2rem; 
       line-height: 0.72; 
       color: #fff;
     }
@@ -364,9 +364,9 @@
     /* SAVE THE DATE (teks kecil) di KIRI, Rata KANAN */
     .hero-save {
       position: absolute;
-      left: 4rem; 
-      bottom: 3.9rem; 
-      font-size: 1rem; 
+      left: 3.8rem; 
+      bottom: 4.2rem; 
+      font-size: 0.7rem; 
       letter-spacing: 0.28em; 
       text-transform: uppercase;
       color: #fff;
@@ -382,7 +382,7 @@
       padding: 3rem 1.5rem 3rem;
       text-align: center;
       /* Background PINK SOLID */
-      background: #f78fa9;
+      background: #fcc5d2;
       position: relative;
     }
     /* New: The white banner wrap for countdown */
@@ -438,13 +438,12 @@
       margin-top: 1rem;
     }
 
-    /* ========== DOA & NAMA PENGANTIN ========== */
+/* ========== DOA & NAMA PENGANTIN (VERSI BARU) ========== */
 
     .section-intro {
       padding: 2.2rem 1.5rem;
-      /* Background PINK SOLID */
       background: #f78fa9;
-      color: #111; /* Text color inside section */
+      color: #111;
       text-align: center;
     }
 
@@ -461,66 +460,7 @@
       margin-bottom: 2rem;
       color: #111;
     }
-
-    .intro-card {
-      background: #fff;
-      color: #111;
-      border-radius: 2rem;
-      padding: 1.8rem 1.2rem 1.6rem;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.18);
-      position: relative;
-    }
-
-    .intro-photo {
-      border-radius: 1rem;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-
-    .intro-names {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      margin-bottom: 0.8rem;
-      position: relative; 
-      z-index: 20;
-    }
-    .intro-names > div {
-      padding: 0 1rem;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 1.4rem;
-      padding: 1rem;
-    }
     
-    .intro-names span { display: block; }
-    
-    .intro-name-big {
-      font-family: "Bintaro", cursive;
-      font-size: 2.2rem;
-      font-weight: 400;
-      color: #f78fa9;
-      line-height: 1.1;
-    }
-    .intro-and {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 6rem;
-      font-weight: 700;
-      color: #ffc4d0; 
-      z-index: 10;
-      pointer-events: none;
-    }
-
-    .intro-detail {
-      font-size: 0.7rem;
-      line-height: 1.4;
-      margin-top: 0.3rem;
-      font-weight: 500;
-      color: #333;
-    }
-
     .intro-invite {
       margin-top: 2rem;
       font-size: 0.85rem;
@@ -531,29 +471,155 @@
       margin-right: auto;
     }
 
+    /* KONTENER UTAMA */
+    .profile-container {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    /* WRAPPER FOTO */
+    .profile-photo-wrapper {
+      border-radius: 1.8rem;
+      overflow: hidden; /* Ini kuncinya untuk efek reveal */
+      aspect-ratio: 4 / 3; /* Sesuaikan rasio ini dengan foto Anda */
+      box-shadow: 0 16px 30px rgba(0,0,0,0.18);
+      position: relative;
+    }
+
+    .profile-photo-wrapper img {
+      position: absolute;
+      /* Buat gambar lebih lebar dari wrapper-nya agar bisa digeser */
+      width: 150%; 
+      height: 100%;
+      object-fit: cover;
+      /* Initial position: fokus ke pria di sisi kanan gambar */
+      left: -50%; 
+      will-change: transform; /* Optimasi animasi */
+      transition: transform 0.6s cubic-bezier(.25,.8,.25,1);
+    }
+    
+    /* OVERLAY NAMA & SIMBOL */
+    .profile-names-overlay {
+      position: relative;
+      margin-top: -3.5rem; /* Tarik ke atas agar menimpa foto */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 0.5rem;
+    }
+
+    .profile-name-card {
+      background: #fff;
+      border-radius: 1.4rem;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 10;
+      flex-shrink: 0;
+      width: 48%; /* Atur lebar kartu nama */
+      will-change: transform, opacity; /* Optimasi animasi */
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* KARTU NAMA PRIA (Groom) */
+    .profile-name-card.groom {
+      text-align: left;
+    }
+
+    /* KARTU NAMA WANITA (Bride) */
+    .profile-name-card.bride {
+      text-align: right;
+      /* Kondisi Awal: Sembunyikan */
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+
+    /* SIMBOL & */
+    .profile-ampersand {
+      z-index: 20;
+      width: 60px; /* Ukuran simbol & */
+      margin: 0 -15px; /* Atur agar sedikit menimpa kartu nama */
+      margin-top: 1rem;
+      will-change: transform, opacity; /* Optimasi animasi */
+      transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+      /* Kondisi Awal: Sembunyikan */
+      opacity: 0;
+      transform: scale(0.7);
+    }
+
+    /* FONT DI DALAM KARTU NAMA */
+    .profile-name-card .intro-name-big {
+      font-family: "Dancing Script", cursive; /* Font yang lebih cocok */
+      font-size: 1.8rem;
+      color: #333;
+    }
+    .profile-name-card .intro-detail {
+      font-family: "Playfair Display", serif;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      margin-top: 0.3rem;
+      color: #555;
+    }
+    
+    /* STYLE KETIKA ANIMASI AKTIF */
+    .profile-container.in-view .profile-photo-wrapper img {
+      transform: translateX(33.3%); /* Geser gambar ke kiri untuk menengahkan */
+    }
+    .profile-container.in-view .profile-name-card.bride {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .profile-container.in-view .profile-ampersand {
+      opacity: 1;
+      transform: scale(1);
+    }
+
     /* ========== JADWAL ACARA ========== */
 
+    
     .section-schedule {
       padding: 2.4rem 1.5rem 2.6rem;
       /* Background PINK SOLID */
-      background: #f78fa9;
+      background: #fcc5d2;
       color: #111; /* Text color inside section */
       text-align: center;
     }
 
+     .schedule-date-header {
+      display: flex; /* Membuat item di dalamnya sejajar */
+      justify-content: center; /* Memposisikan item ke tengah */
+      align-items: center; /* Meluruskan teks berdasarkan garis bawahnya (terlihat rapi) */
+      gap: 0.7rem; /* Memberi jarak antara "Jumat" dan tanggal */
+      margin-bottom: 1rem; /* Memberi jarak ke bawah (ke kartu jadwal) */
+    }
+
     .schedule-date-label {
       font-family: "Bintaro", cursive;
-      font-size: 3rem;
+      font-size: 4rem;
       line-height: 1;
       color: #111;
-      margin-bottom: 0.1rem;
+      margin-bottom: 0;
     }
     .schedule-date-main {
-      margin-top: 0;
-      font-size: 1.8rem;
+      /* Hapus semua properti lama dan ganti dengan ini */
+      text-align: center; /* Agar teks rata kiri di dalam bloknya */
       font-weight: 700;
       color: #111;
-      margin-bottom: 1rem;
+    }
+    
+    /* TAMBAHKAN BLOK KODE BARU INI */
+    .schedule-date-main span {
+      display: block; /* Ini KUNCINYA: membuat setiap span mengambil baris baru */
+      line-height: 0.7; /* Mengatur jarak antar baris agar tidak terlalu jauh */
+    }
+
+    /* Atur ukuran font untuk masing-masing baris */
+    .schedule-date-main span:first-child {
+      font-size: 1.8rem; /* Ukuran untuk "12 Desember" */
+    }
+    .schedule-date-main span:last-child {
+      font-size: 1.8rem; /* Ukuran untuk "2025" (sedikit lebih kecil) */
     }
 
     .schedule-cards {
@@ -610,7 +676,7 @@
     .section-gallery {
       padding: 2.2rem 1rem 2.4rem;
       /* Background PINK SOLID */
-      background: #f78fa9;
+      background: #fcc5d2;
     }
 
     .gallery-grid {
@@ -633,7 +699,7 @@
     .section-gift {
       padding: 2.4rem 1.5rem 2.6rem;
       /* Background PINK SOLID */
-      background: #f78fa9;
+      background: #fcc5d2;
       color: #111;
       text-align: center;
     }
@@ -734,7 +800,7 @@
     .section-thanks {
       padding: 2.4rem 1.5rem 2.8rem;
       /* Background PINK SOLID */
-      background: #f78fa9;
+      background: #fcc5d2;
       text-align: center;
       color: #111;
     }
@@ -801,18 +867,18 @@
           <div class="hero-tag">WEDDING OF</div>
 
           <div class="hero-script" data-animate>
-            <span>Riesa</span>
-            <span>&amp;</span>
-            <span>Lukman</span>
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </div>
 
         <!-- overlay save the date + tanggal, nempel di foto, posisinya di bawah -->
-        <div class="hero-save" data-animate data-delay="100ms">
+        <div class="hero-save" data-animate data-delay="600ms">
           SAVE<br>THE<br>DATE
         </div>
 
-        <div class="hero-date-block" data-animate data-delay="200ms">
+        <div class="hero-date-block" data-animate data-delay="700ms">
           <span>12.</span>
           <span>12.</span>
           <span>2025.</span>
@@ -841,53 +907,71 @@
             </div>
           </div>
         </div>
-        <button class="btn-primary" type="button" data-animate data-delay="300ms">
+        <button class="btn-primary" type="button" data-animate data-delay="500ms">
           Save The Date
         </button>
       </section>
 
-      <!-- DOA & NAMA PENGANTIN -->
-      <section class="section-intro" data-stagger-container>
+<!-- DOA & NAMA PENGANTIN (VERSI BARU DENGAN ANIMASI) -->
+      <section class="section-intro" id="introSection">
         <div class="intro-bismi" data-animate>Bismillahirrahmanirrahim</div>
         <p class="intro-text" data-animate data-delay="100ms">
           Maha Suci Allah SWT yang telah menciptakan makhluk-Nya berpasang-pasangan.
           Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
         </p>
 
-        <div class="intro-card" data-animate data-delay="200ms">
-          <div class="intro-photo">
-            <!-- foto berdua -->
-            <img src="images/couple-card.jpg" alt="Riesa dan Lukman">
+        <!-- KONTENER UTAMA PROFIL BARU -->
+        <div class="profile-container">
+          <!-- Wrapper untuk foto yang akan di-clip -->
+          <div class="profile-photo-wrapper">
+              <!-- Foto yang akan digeser (sliding) -->
+              <img src="images/couple-card.jpg" alt="Riesa dan Lukman" id="profilePhoto">
           </div>
-          <div class="intro-and">&amp;</div> 
-          <div class="intro-names">
-            <div data-animate data-delay="300ms">
-              <span class="intro-name-big">M. Lukmannul Hakim</span>
-              <span class="intro-detail">
-                Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
-                (Jl Wilis No.69 Podosugih, Pekalongan Barat)
-              </span>
-            </div>
-            <div data-animate data-delay="500ms">
-              <span class="intro-name-big">Riesa Putri Febziani</span>
-              <span class="intro-detail">
-                Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
-                (Gg. Pamsimas, Sapuro Indah, Pekalongan Barat)
-              </span>
-            </div>
+
+          <!-- Wrapper untuk nama dan ampersand -->
+          <div class="profile-names-overlay">
+              <!-- Kartu Nama Pria -->
+              <div class="profile-name-card groom" id="groomCard">
+                  <span class="intro-name-big">M. Lukmanul Hakim</span>
+                  <span class="intro-detail">
+                      Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
+                      (Jl Wilis No.69 Podosugih, Pekalongan Barat)
+                  </span>
+              </div>
+
+              <!-- Simbol & -->
+              <div class="profile-ampersand" id="profileAmpersand">
+                  <!-- Ganti src dengan file gambar ampersand Anda -->
+                  <img src="images/ampersand.png" alt="dan">
+              </div>
+
+              <!-- Kartu Nama Wanita -->
+              <div class="profile-name-card bride" id="brideCard">
+                  <span class="intro-name-big">Riesa Putri Febriani</span>
+                  <span class="intro-detail">
+                      Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
+                      (Gg. Pamsimas, Sapuro Indah, Pekalongan Barat)
+                  </span>
+              </div>
           </div>
         </div>
-          <p class="intro-invite" data-animate data-delay="700ms">
-            Dengan penuh rasa hormat kami mengharapkan kehadiran
-            Bapak/Ibu/Saudara sekalian pada Acara Pernikahan kami
-            yang akan kami laksanakan pada:
-          </p>
+
+        <p class="intro-invite" data-animate>
+          Dengan penuh rasa hormat kami mengharapkan kehadiran
+          Bapak/Ibu/Saudara sekalian pada Acara Pernikahan kami
+          yang akan kami laksanakan pada:
+        </p>
       </section>
 
       <!-- JADWAL ACARA -->
       <section class="section-schedule">
-        <div class="schedule-date-label">Jumat</div>
-        <div class="schedule-date-main">12 Desember 2025</div>
+        <div class="schedule-date-header">
+          <div class="schedule-date-label">Jumat</div>
+          <div class="schedule-date-main">
+            <span>12 Desember</span>
+            <span>2025</span>
+            </div>
+        </div>
 
         <div class="schedule-cards">
           <div class="schedule-card" data-animate>
@@ -902,7 +986,7 @@
               Pekalongan Barat
             </div>
             <button class="btn-location" type="button" data-animate>
-              <span>📍</span> <span>Lokasi</span>
+              <span>LOKASI</span>
             </button>
           </div>
 
@@ -918,7 +1002,7 @@
               Pekalongan Barat
             </div>
             <button class="btn-location" type="button" data-animate>
-              <span>📍</span> <span>Lokasi</span>
+              <span>LOKASI</span>
             </button>
           </div>
         </div>
@@ -939,33 +1023,32 @@
       <!-- GIFT / AMBLOP DIGITAL -->
       <section class="section-gift" data-stagger-container>
         <div class="gift-title" data-animate>Your Gift to Us</div>
-        <p class="gift-text" data-animate data-delay="100ms">
+        <p class="gift-text" data-animate data-delay="700ms">
           Kehadiran Bapak/Ibu/Saudara merupakan hadiah terbaik bagi kami.
           Namun jika berkenan memberikan tanda kasih, kami sediakan rekening
           berikut. Semoga keikhlasan, perhatian dan kebaikan akan dibalas
           dengan rahmat dan rezeki berlimpah. Aamiin.
         </p>
 
-        <div class="gift-boxes" data-animate data-delay="200ms">
+        <div class="gift-boxes" data-animate data-delay="600ms">
           <div class="gift-cards">
             <div class="gift-card bca">
               <div class="gift-bank-name">BCA</div>
               <div class="gift-bank-no" id="bcaNo">3820145681</div>
-              <div class="gift-owner">a.n. Riesa Putri Febziani</div>
+              <div class="gift-owner">a.n. Riesa Putri Febriani</div>
               <button class="btn-copy" type="button" data-target="bcaNo" data-info="bcaInfo" data-animate data-delay="300ms">Salin nomor BCA</button>
             </div>
 
             <div class="gift-card bni">
               <div class="gift-bank-name">BNI</div>
               <div class="gift-bank-no" id="bniNo">0622621535</div>
-              <div class="gift-owner">a.n. Lukmannul Hakim</div>
+              <div class="gift-owner">a.n. Lukmanul Hakim</div>
               <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo" data-animate data-delay="500ms">Salin nomor BNI</button>
             </div>
           </div>
 
           <div class="gift-note">
-            Jika terjadi salah data yang tidak kami sadari, maka permohonan
-            maaf adalah hadiah terbaik yang paling baik dan diterima.
+            Bila wujud cinta harus dibuktikan, maka pernikahan adalah bukti cinta lahir batin yang paling baik dan diridhoi-Nya, karena dengan begitu cinta tidak akan rusak karenanya, justru cintalah yang menjaganya
           </div>
           <div class="copy-info" id="bcaInfo">Nomor BCA tersalin ✔</div>
           <div class="copy-info" id="bniInfo">Nomor BNI tersalin ✔</div>
@@ -976,7 +1059,7 @@
       <section class="section-thanks" data-stagger-container>
         <div class="thanks-title" data-animate>Thanks You</div>
         <p class="thanks-text" data-animate data-delay="100ms">
-          Terima kasih atas doa dan kehadirannya dalam acara pernikahan kami.
+          Terima kasih telah mengambil keputusan hadir dan memberikan doa di pernikahan kami.
         </p>
         <div class="footer" data-animate data-delay="200ms">
           &copy; 2025 — Riesa &amp; Lukman
@@ -1008,47 +1091,55 @@
 
     /* ----- IntersectionObserver for on-scroll entrance with stagger (REVISED) ----- */
 
-    const observerOptions = { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.1 }; // Margin disesuaikan agar trigger lebih cepat
-    
-    const io = new IntersectionObserver((entries) => {
+/* ----- IntersectionObserver for on-scroll entrance (HYBRID VERSION) ----- */
+
+    const observerOptions = { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.1 };
+
+    // --- OBSERVER 1: Untuk animasi sekali jalan (tombol, teks, dll) ---
+    const oneWayObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const el = entry.target;
           
-          // 1. Cek apakah elemen itu sendiri adalah elemen yang dianimasikan
           if (el.matches('[data-animate]')) {
              el.classList.add('in-view');
              if (el.matches('.btn-primary, .btn-location, .btn-copy, .countdown-box')) el.classList.add('pop');
           }
           
-          // 2. Cek untuk staggered children (jika elemen adalah kontainer)
-          const children = Array.from(el.querySelectorAll('[data-animate]'));
-          
-          if (children.length) {
-            children.forEach((child, i) => {
-              // Cek apakah child sudah memiliki delay manual (dari HTML), jika tidak, berikan delay stagger
+          if (el.matches('[data-stagger-container]')) {
+            el.querySelectorAll('[data-animate]').forEach((child, i) => {
               if (!child.dataset.delay) {
                 child.style.setProperty('--delay', `${i * 90}ms`);
               }
               child.classList.add('in-view');
-              // Tambahkan pop class untuk elemen kecil/tombol
               if (child.matches('.btn-primary, .btn-location, .btn-copy, .countdown-box')) child.classList.add('pop');
-             });
+            });
           }
           
-          io.unobserve(el); // Animasi sekali
+          observer.unobserve(el); // TETAP GUNAKAN unobserve di sini
         }
       });
-     }, observerOptions);
+    }, observerOptions);
 
-    // Kumpulkan semua elemen yang perlu diamati.
-    document.querySelectorAll('[data-animate], .section-save, .section-intro, .section-schedule, .section-gallery, .section-gift, .section-thanks').forEach(node => {
-        // Hero section tidak perlu diobservasi sebagai kontainer karena elemennya sudah diobservasi individual di bawah.
-        if (!node.classList.contains('hero')) {
-             io.observe(node);
+    // --- OBSERVER 2: Khusus untuk animasi profil yang bisa berbalik ---
+    const reversibleObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        } else {
+          entry.target.classList.remove('in-view');
         }
-    });
+      });
+    }, observerOptions);
 
+    // Jalankan observer sesuai targetnya masing-masing
+    document.querySelectorAll('[data-animate], [data-stagger-container]').forEach(node => {
+      oneWayObserver.observe(node);
+    });
+    
+    document.querySelectorAll('.profile-container').forEach(node => {
+      reversibleObserver.observe(node);
+    });
 
     // copy rekening
     const copyButtons = document.querySelectorAll(".btn-copy");
