@@ -446,6 +446,11 @@
       background: #f78fa9;
       color: #111;
       text-align: center;
+      /* Menambahkan max-width dan border-radius agar terlihat seperti komponen */
+      max-width: 420px;
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
     .intro-bismi {
@@ -480,6 +485,14 @@
       margin: 0 auto;
     }
 
+    /* KONTENER UTAMA */
+    .profile-container {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
     /* WRAPPER FOTO */
     .profile-photo-wrapper {
       border-radius: 1.8rem;
@@ -487,6 +500,13 @@
       aspect-ratio: 4 / 3; /* Sesuaikan rasio ini dengan foto Anda */
       box-shadow: 0 16px 30px rgba(0,0,0,0.18);
       position: relative;
+      background: #fff; /* Warna placeholder jika gambar gagal dimuat */
+      
+      /* --- TAMBAHKAN INI --- */
+      width: 90%; /* Buat foto lebih sempit dari kontainer */
+      margin-left: auto;  /* Tengahkan foto */
+      margin-right: auto; /* Tengahkan foto */
+      /* --------------------- */
     }
 
     .profile-photo-wrapper img {
@@ -495,20 +515,21 @@
       width: 150%; 
       height: 100%;
       object-fit: cover;
-      /* Initial position: fokus ke pria di sisi kanan gambar */
-      left: -50%; 
+      /* Initial position: fokus ke pria di sisi KIRI gambar */
+      left: 0; 
       will-change: transform; /* Optimasi animasi */
-      transition: transform 0.6s cubic-bezier(.25,.8,.25,1);
+      /* HAPUS transisi, kita ganti dengan animasi */
+      /* transition: transform 0.6s cubic-bezier(.25,.8,.25,1); */
     }
     
     /* OVERLAY NAMA & SIMBOL */
     .profile-names-overlay {
-      position: relative;
+      position: relative; /* Diubah dari flex */
       margin-top: -3.5rem; /* Tarik ke atas agar menimpa foto */
-      display: flex;
-      justify-content: center;
       align-items: flex-start;
       padding: 0 0.5rem;
+      /* Tambahkan min-height agar 'position: absolute' tidak 'collapse' */
+      min-height: 120px; 
     }
 
     .profile-name-card {
@@ -518,40 +539,43 @@
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       z-index: 10;
       flex-shrink: 0;
-      width: 48%; /* Atur lebar kartu nama */
-      will-change: transform, opacity; /* Optimasi animasi */
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      
+      /* --- PERUBAHAN LAYOUT --- */
+      position: absolute;
+      width: 90%; /* Dibuat selebar foto (yg juga 90%) */
+      left: 5%; /* Menengahkan (100% - 90%) / 2 */
+      /* ----------------------- */
+
+      will-change: transform, opacity;
+      /* Transisi singkat untuk menghaluskan 'scrubbing' */
+      transition: transform 0.1s linear, opacity 0.1s linear;
     }
 
     /* KARTU NAMA PRIA (Groom) */
     .profile-name-card.groom {
       text-align: left;
+      /* Kondisi Awal: Sembunyi di kiri */
+      opacity: 0;
+      transform: translateX(-40px);
     }
 
     /* KARTU NAMA WANITA (Bride) */
     .profile-name-card.bride {
       text-align: right;
-      /* Kondisi Awal: Sembunyikan */
+      /* Kondisi Awal: Sembunyi di kanan */
       opacity: 0;
-      transform: translateY(20px) scale(0.95);
+      transform: translateX(40px); /* Ganti dari translateY */
     }
 
     /* SIMBOL & */
     .profile-ampersand {
-      z-index: 20;
-      width: 60px; /* Ukuran simbol & */
-      margin: 0 -15px; /* Atur agar sedikit menimpa kartu nama */
-      margin-top: 1rem;
-      will-change: transform, opacity; /* Optimasi animasi */
-      transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
-      /* Kondisi Awal: Sembunyikan */
-      opacity: 0;
-      transform: scale(0.7);
+       /* Disembunyikan karena logika animasi baru */
+       display: none;
     }
 
     /* FONT DI DALAM KARTU NAMA */
     .profile-name-card .intro-name-big {
-      font-family: "Dancing Script", cursive; /* Font yang lebih cocok */
+      font-family: "bintaro", cursive; /* Font yang lebih cocok */
       font-size: 1.8rem;
       color: #333;
     }
@@ -562,23 +586,9 @@
       margin-top: 0.3rem;
       color: #555;
     }
-    
-    /* STYLE KETIKA ANIMASI AKTIF */
-    .profile-container.in-view .profile-photo-wrapper img {
-      transform: translateX(33.3%); /* Geser gambar ke kiri untuk menengahkan */
-    }
-    .profile-container.in-view .profile-name-card.bride {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    .profile-container.in-view .profile-ampersand {
-      opacity: 1;
-      transform: scale(1);
-    }
 
     /* ========== JADWAL ACARA ========== */
 
-    
     .section-schedule {
       padding: 2.4rem 1.5rem 2.6rem;
       /* Background PINK SOLID */
@@ -914,56 +924,54 @@
       </section>
 
 <!-- DOA & NAMA PENGANTIN (VERSI BARU DENGAN ANIMASI) -->
-      <section class="section-intro" id="introSection">
-        <div class="intro-bismi" data-animate>Bismillahirrahmanirrahim</div>
-        <p class="intro-text" data-animate data-delay="100ms">
-          Maha Suci Allah SWT yang telah menciptakan makhluk-Nya berpasang-pasangan.
-          Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
-        </p>
+  <section class="section-intro" id="introSection">
+    <div class="intro-bismi font-bintaro" data-animate>Bismillahirrahmanirrahim</div>
+    <p class="intro-text" data-animate data-delay="100ms">
+      Maha Suci Allah SWT yang telah menciptakan makhluk-Nya berpasang-pasangan.
+      Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
+    </p>
 
-        <!-- KONTENER UTAMA PROFIL BARU -->
-        <div class="profile-container">
-          <!-- Wrapper untuk foto yang akan di-clip -->
-          <div class="profile-photo-wrapper">
-              <!-- Foto yang akan digeser (sliding) -->
-              <img src="images/couple-card.jpg" alt="Riesa dan Lukman" id="profilePhoto">
+    <!-- KONTENER UTAMA PROFIL BARU -->
+    <div class="profile-container">
+      <!-- Wrapper untuk foto yang akan di-clip -->
+      <div class="profile-photo-wrapper">
+          <!-- GANTI 'src' DENGAN PATH GAMBAR ANDA (misal: images/couple-card.jpg) -->
+          <img src="images/couple-card.jpg" alt="Riesa dan Lukman" id="profilePhoto" onerror="this.src='https://placehold.co/600x450/D1B1C8/FFFFFF?text=Foto+Pengantin'">
+      </div>
+
+      <!-- Wrapper untuk nama dan ampersand -->
+      <div class="profile-names-overlay">
+          <!-- Kartu Nama Pria -->
+          <div class="profile-name-card groom" id="groomCard">
+              <span class="intro-name-big">M. Lukmanul Hakim</span>
+              <span class="intro-detail">
+                  Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
+                  (Jl Wilis No.69 Podosugih, Pekalongan Barat)
+              </span>
           </div>
 
-          <!-- Wrapper untuk nama dan ampersand -->
-          <div class="profile-names-overlay">
-              <!-- Kartu Nama Pria -->
-              <div class="profile-name-card groom" id="groomCard">
-                  <span class="intro-name-big">M. Lukmanul Hakim</span>
-                  <span class="intro-detail">
-                      Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
-                      (Jl Wilis No.69 Podosugih, Pekalongan Barat)
-                  </span>
-              </div>
-
-              <!-- Simbol & -->
-              <div class="profile-ampersand" id="profileAmpersand">
-                  <!-- Ganti src dengan file gambar ampersand Anda -->
-                  <img src="images/ampersand.png" alt="dan">
-              </div>
-
-              <!-- Kartu Nama Wanita -->
-              <div class="profile-name-card bride" id="brideCard">
-                  <span class="intro-name-big">Riesa Putri Febriani</span>
-                  <span class="intro-detail">
-                      Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
-                      (Gg. Pamsimas, Sapuro Indah, Pekalongan Barat)
-                  </span>
-              </div>
+          <!-- Simbol & (sekarang disembunyikan via CSS) -->
+          <div class="profile-ampersand" id="profileAmpersand">
+              <img src="https://placehold.co/100x100/F472B6/FFFFFF?text=%26&font=serif" alt="dan" onerror="this.src='https://placehold.co/100x100/F472B6/FFFFFF?text=%26&font=serif'">
           </div>
-        </div>
 
-        <p class="intro-invite" data-animate>
-          Dengan penuh rasa hormat kami mengharapkan kehadiran
-          Bapak/Ibu/Saudara sekalian pada Acara Pernikahan kami
-          yang akan kami laksanakan pada:
-        </p>
-      </section>
+          <!-- Kartu Nama Wanita -->
+          <div class="profile-name-card bride" id="brideCard">
+              <span class="intro-name-big">Riesa Putri Febriani</span>
+              <span class="intro-detail">
+                  Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
+                  (Gg. Pamsimas, Sapuro Indah, Pekalongan Barat)
+              </span>
+          </div>
+      </div>
+    </div>
 
+    <p class="intro-invite" data-animate>
+      Dengan penuh rasa hormat kami mengharapkan kehadiran
+      Bapak/Ibu/Saudara sekalian pada Acara Pernikahan kami
+      yang akan kami laksanakan pada:
+    </p>
+  </section>
       <!-- JADWAL ACARA -->
       <section class="section-schedule">
         <div class="schedule-date-header">
@@ -1104,7 +1112,6 @@
           
           if (el.matches('[data-animate]')) {
              el.classList.add('in-view');
-             if (el.matches('.btn-primary, .btn-location, .btn-copy, .countdown-box')) el.classList.add('pop');
           }
           
           if (el.matches('[data-stagger-container]')) {
@@ -1113,7 +1120,6 @@
                 child.style.setProperty('--delay', `${i * 90}ms`);
               }
               child.classList.add('in-view');
-              if (child.matches('.btn-primary, .btn-location, .btn-copy, .countdown-box')) child.classList.add('pop');
             });
           }
           
@@ -1133,14 +1139,89 @@
       });
     }, observerOptions);
 
+    // --- OBSERVER 2: Hapus 'reversibleObserver' ---
+    /* const reversibleObserver = new ... (SELURUH BLOK INI DIHAPUS) */
+
     // Jalankan observer sesuai targetnya masing-masing
     document.querySelectorAll('[data-animate], [data-stagger-container]').forEach(node => {
       oneWayObserver.observe(node);
     });
     
-    document.querySelectorAll('.profile-container').forEach(node => {
-      reversibleObserver.observe(node);
-    });
+    /* Hapus pemicu untuk 'reversibleObserver' */
+    /* document.querySelectorAll('.profile-container').forEach(node => { ... }); */
+
+
+    /* --- TAMBAHAN: LOGIKA BARU UNTUK SCROLL-DRIVEN ANIMATION ---
+    */
+    
+    // 1. Ambil elemen-elemen yang akan dianimasikan
+    const profileContainer = document.querySelector('.profile-container');
+    const photo = document.getElementById('profilePhoto');
+    const groomCard = document.getElementById('groomCard');
+    const brideCard = document.getElementById('brideCard');
+
+    // 2. Buat fungsi untuk mengupdate animasi berdasarkan progres scroll
+    function updateAnimation(progress) {
+      // Pastikan elemen ada
+      if (!photo || !groomCard || !brideCard) return;
+
+      // progress akan bernilai 0 (awal) sampai 1 (akhir)
+      
+      // Bagian 1: Animasi Nama Pria (Progres 0 -> 0.5)
+      // map 'progress' 0-0.5 menjadi 'priaProgress' 0-1
+      const priaProgress = Math.min(1, progress / 0.5); 
+      
+      // Bagian 2: Animasi Foto & Wanita (Progres 0.5 -> 1)
+      // map 'progress' 0.5-1 menjadi 'wanitaProgress' 0-1
+      const wanitaProgress = Math.max(0, (progress - 0.5) / 0.5);
+
+      // Terapkan animasi Nama Pria
+      // Muncul (0 -> 1), lalu Hilang (1 -> 0)
+      const groomOpacity = Math.max(0, priaProgress - wanitaProgress);
+      groomCard.style.opacity = groomOpacity;
+      // Bergerak (dari -40px ke 0px), lalu (dari 0px ke -40px lagi)
+      groomCard.style.transform = `translateX(${-40 + (priaProgress * 40) - (wanitaProgress * 40)}px)`;
+
+      // Terapkan animasi Foto
+      // Diam (0% -> 50%), lalu Bergerak (50% -> 100%)
+      photo.style.transform = `translateX(${-(wanitaProgress * 33.33)}%)`;
+
+      // Terapkan animasi Nama Wanita
+      // Diam & Sembunyi (0% -> 50%), lalu Muncul (50% -> 100%)
+      brideCard.style.opacity = wanitaProgress;
+      // Bergerak (dari 40px ke 0px)
+      brideCard.style.transform = `translateX(${40 - (wanitaProgress * 40)}px)`;
+    }
+
+    // 3. Buat fungsi 'listener' yang dipanggil setiap kali user scroll
+    function handleProfileScroll() {
+      if (!profileContainer) return;
+
+      const rect = profileContainer.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // Tentukan kapan animasi dimulai dan berakhir
+      // Mulai: Saat bagian atas kontainer 80% dari bawah layar
+      const startOffset = vh * 0.8;
+      // Selesai: Saat bagian atas kontainer 20% dari atas layar
+      const endOffset = vh * 0.2;
+      
+      const totalDistance = startOffset - endOffset;
+      const currentPosition = rect.top;
+
+      // Hitung progres (0 saat di 'start', 1 saat di 'end')
+      let progress = (startOffset - currentPosition) / totalDistance;
+      // Batasi progres antara 0 dan 1
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Panggil fungsi update dengan nilai progres
+      updateAnimation(progress);
+    }
+
+    // 4. Tambahkan listener ke window
+    window.addEventListener('scroll', handleProfileScroll);
+    // Panggil sekali di awal untuk mengatur posisi
+    handleProfileScroll();
 
     // copy rekening
     const copyButtons = document.querySelectorAll(".btn-copy");
