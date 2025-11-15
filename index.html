@@ -485,25 +485,17 @@
       margin: 0 auto;
     }
 
-    /* KONTENER UTAMA */
-    .profile-container {
-      position: relative;
-      width: 100%;
-      max-width: 380px;
-      margin: 0 auto;
-    }
-
     /* WRAPPER FOTO */
     .profile-photo-wrapper {
       border-radius: 1.8rem;
       overflow: hidden; /* Ini kuncinya untuk efek reveal */
-      aspect-ratio: 4 / 3; /* Sesuaikan rasio ini dengan foto Anda */
+      aspect-ratio: 3/4; /* Sesuaikan rasio ini dengan foto Anda */
       box-shadow: 0 16px 30px rgba(0,0,0,0.18);
       position: relative;
       background: #fff; /* Warna placeholder jika gambar gagal dimuat */
       
       /* --- TAMBAHKAN INI --- */
-      width: 90%; /* Buat foto lebih sempit dari kontainer */
+      width: 100%; /* Buat foto lebih sempit dari kontainer */
       margin-left: auto;  /* Tengahkan foto */
       margin-right: auto; /* Tengahkan foto */
       /* --------------------- */
@@ -511,8 +503,8 @@
 
     .profile-photo-wrapper img {
       position: absolute;
-      /* Buat gambar lebih lebar dari wrapper-nya agar bisa digeser */
-      width: 150%; 
+      /* Buat gambar 2x lebih lebar dari wrapper-nya agar hanya 50% yang terlihat */
+      width: 200%; /* UBAH DARI 150% KE 200% */
       height: 100%;
       object-fit: cover;
       /* Initial position: fokus ke pria di sisi KIRI gambar */
