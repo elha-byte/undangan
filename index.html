@@ -588,12 +588,12 @@
     /* FONT DI DALAM KARTU NAMA */
     .profile-name-card .intro-name-big {
       font-family: "bintaro", cursive; /* Font yang lebih cocok */
-      font-size: 3rem;
+      font-size: 2.8rem;
       color: #333;
     }
     .profile-name-card .intro-detail {
       font-family: "Playfair Display", serif;
-      font-size: 0.7rem;
+      font-size: 0.6rem;
       line-height: 1.4;
       margin-top: 0.3rem;
       color: #555;
@@ -825,7 +825,7 @@
       height: auto;
       padding: 8px 12px;    /* Jarak antara logo dan tepian latar putih */
       border-radius: 8px;   /* Sudut melengkung */
-      margin-bottom: 1rem;  /* Jarak ke nomor rekening */
+      margin-bottom: 0.5rem;  /* Jarak ke nomor rekening */
     }
 
     .gift-bank-name {
@@ -984,7 +984,7 @@
             </div>
           </div>
         </div>
-        <button class="btn-primary" type="button" data-animate data-delay="500ms">
+        <button class="btn-primary" type="button" id="btnSaveDate" data-animate data-delay="500ms">
           Save The Date
         </button>
       </section>
@@ -1065,8 +1065,12 @@
               Gg. Pamsimas, Sapuro Indah<br>
               Pekalongan Barat
             </div>
-            <button class="btn-location" type="button" data-animate>
-              <span>LOKASI</span>
+            <button class="btn-location" type="button" data-animate 
+              onclick="window.open('https://maps.app.goo.gl/TaWTK2ZeXEc5cfRr9', '_blank')">
+              <!-- Saya tambahkan ikon peta kecil biar cantik -->
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>Google Maps</span>
+            </button>
             </button>
           </div>
 
@@ -1081,8 +1085,12 @@
               Gg. Pamsimas, Sapuro Indah<br>
               Pekalongan Barat
             </div>
-            <button class="btn-location" type="button" data-animate>
-              <span>LOKASI</span>
+<!-- Tombol LOKASI RESEPSI -->
+            <button class="btn-location" type="button" data-animate 
+              onclick="window.open('https://maps.app.goo.gl/TaWTK2ZeXEc5cfRr9', '_blank')">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>Google Maps</span>
+            </button>
             </button>
           </div>
         </div>
@@ -1278,6 +1286,33 @@
 
     const countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown(); // Panggil sekali saat load
+    /* ----- FUNGSI SAVE THE DATE (Google Calendar) ----- */
+    document.getElementById("btnSaveDate").addEventListener("click", function() {
+      // 1. Detail Acara
+      const title = "Wedding of Riesa & Lukman";
+      const details = "Tanpa mengurangi rasa hormat, kami mengundang Bapak/Ibu/Saudara untuk hadir di acara pernikahan kami. Terima kasih atas doa restunya.";
+      const location = "Gg. Pamsimas, Sapuro Indah, Pekalongan Barat";
+      
+      // 2. Waktu Acara (Format: YYYYMMDDTHHmmSS)
+      // Kita set ke UTC time.
+      // Acara: 12 Des 2025, 08:00 WIB.
+      // WIB = UTC+7. Maka jam 08:00 WIB = 01:00 UTC.
+      const startTime = "20251212T010000Z"; 
+      
+      // Selesai: Anggap sampai jam 17:00 WIB (10:00 UTC)
+      const endTime   = "20251212T100000Z";
+
+      // 3. Buat Link Google Calendar
+      const calendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE` +
+        `&text=${encodeURIComponent(title)}` +
+        `&dates=${startTime}/${endTime}` +
+        `&details=${encodeURIComponent(details)}` +
+        `&location=${encodeURIComponent(location)}` +
+        `&sf=true&output=xml`;
+
+      // 4. Buka di Tab Baru
+      window.open(calendarUrl, '_blank');
+    });
     
   </script>
 </body>
