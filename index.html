@@ -443,7 +443,7 @@
 
     .section-intro {
       padding: 2.2rem 1.5rem;
-      background: #f78fa9;
+      background: #fcc5d2;
       color: #111;
       text-align: center;
       /* Menambahkan max-width dan border-radius agar terlihat seperti komponen */
@@ -489,7 +489,7 @@
     .profile-photo-wrapper {
       border-radius: 1.8rem;
       overflow: hidden; /* Ini kuncinya untuk efek reveal */
-      aspect-ratio: 3/4; /* Sesuaikan rasio ini dengan foto Anda */
+      aspect-ratio: 4/3; /* Sesuaikan rasio ini dengan foto Anda */
       box-shadow: 0 16px 30px rgba(0,0,0,0.18);
       position: relative;
       background: #fff; /* Warna placeholder jika gambar gagal dimuat */
@@ -503,25 +503,23 @@
 
     .profile-photo-wrapper img {
       position: absolute;
-      /* Buat gambar 2x lebih lebar dari wrapper-nya agar hanya 50% yang terlihat */
-      width: 200%; /* UBAH DARI 150% KE 200% */
+      width: 100%; 
       height: 100%;
       object-fit: cover;
-      /* Initial position: fokus ke pria di sisi KIRI gambar */
+
       left: 0; 
-      will-change: transform; /* Optimasi animasi */
-      /* HAPUS transisi, kita ganti dengan animasi */
-      /* transition: transform 0.6s cubic-bezier(.25,.8,.25,1); */
     }
     
     /* OVERLAY NAMA & SIMBOL */
     .profile-names-overlay {
-      position: relative; /* Diubah dari flex */
+      /* --- PERUBAHAN: Diubah jadi flexbox statis --- */
+      display: flex;
+      flex-direction: column;
+      /* GAP LAMA: gap: 1rem; */ 
+      gap: 0.6rem; /* Kurangi gap agar lebih rapat */
       margin-top: -3.5rem; /* Tarik ke atas agar menimpa foto */
-      align-items: flex-start;
+      align-items: center; /* Tengahkan kartu */
       padding: 0 0.5rem;
-      /* Tambahkan min-height agar 'position: absolute' tidak 'collapse' */
-      min-height: 120px; 
     }
 
     .profile-name-card {
@@ -533,42 +531,64 @@
       flex-shrink: 0;
       
       /* --- PERUBAHAN LAYOUT --- */
-      position: absolute;
+      /* position: absolute; (dihapus) */
       width: 90%; /* Dibuat selebar foto (yg juga 90%) */
-      left: 5%; /* Menengahkan (100% - 90%) / 2 */
+      /* left: 5%; (dihapus) */
       /* ----------------------- */
 
-      will-change: transform, opacity;
-      /* Transisi singkat untuk menghaluskan 'scrubbing' */
-      transition: transform 0.1s linear, opacity 0.1s linear;
+      /* will-change: transform, opacity; (dihapus) */
+      /* transition: ... (dihapus) */
     }
 
     /* KARTU NAMA PRIA (Groom) */
     .profile-name-card.groom {
-      text-align: left;
-      /* Kondisi Awal: Sembunyi di kiri */
-      opacity: 0;
-      transform: translateX(-40px);
+      /* --- PERUBAHAN: Dibuat statis --- */
+      text-align: center;
+      opacity: 1;
+      transform: none;
     }
 
     /* KARTU NAMA WANITA (Bride) */
     .profile-name-card.bride {
-      text-align: right;
-      /* Kondisi Awal: Sembunyi di kanan */
-      opacity: 0;
-      transform: translateX(40px); /* Ganti dari translateY */
+      /* --- PERUBAHAN: Dibuat statis --- */
+      text-align: center;
+      opacity: 1;
+      transform: none; 
+    }
+    
+    /* Container Simbol */
+    .profile-ampersand {
+      position: relative;
+      z-index: 50; /* Pastikan layer lebih tinggi dari kartu nama */
+      
+      /* Mengatur overlap agar menumpuk sedikit di antara dua kartu */
+      margin-top: -1.5rem; 
+      margin-bottom: -1.5rem;
+      
+      /* Mengatur posisi ke tengah */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
     }
 
-    /* SIMBOL & */
-    .profile-ampersand {
-       /* Disembunyikan karena logika animasi baru */
-       display: none;
+    /* Gambar Simbol */
+    .profile-ampersand img {
+      position: relative; /* Ubah dari absolute ke relative */
+      width: 55px;       /* Berikan ukuran pasti */
+      height: 55px;
+      object-fit: contain;
+      
+      /* Reset posisi lama */
+      left: auto; 
+      margin: 0;
     }
+
 
     /* FONT DI DALAM KARTU NAMA */
     .profile-name-card .intro-name-big {
       font-family: "bintaro", cursive; /* Font yang lebih cocok */
-      font-size: 1.8rem;
+      font-size: 3rem;
       color: #333;
     }
     .profile-name-card .intro-detail {
@@ -578,7 +598,51 @@
       margin-top: 0.3rem;
       color: #555;
     }
+ @keyframes zoomInSoft {
+      from { opacity: 0; transform: scale(0.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
 
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes popRotate {
+      0%   { opacity: 0; transform: scale(0) rotate(-45deg); }
+      60%  { transform: scale(1.2) rotate(10deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    /* Class untuk menimpa animasi default (fadeUp) */
+    /* Animasi Foto */
+    .anim-zoom[data-animate].in-view {
+      animation-name: zoomInSoft;
+      animation-duration: 800ms;
+    }
+
+    /* Animasi Kartu Pria (Groom) */
+    .anim-left[data-animate].in-view {
+      animation-name: slideInLeft;
+      animation-duration: 700ms;
+    }
+
+    /* Animasi Kartu Wanita (Bride) */
+    .anim-right[data-animate].in-view {
+      animation-name: slideInRight;
+      animation-duration: 700ms;
+    }
+
+    /* Animasi Simbol & */
+    .anim-pop[data-animate].in-view {
+      animation-name: popRotate;
+      animation-duration: 600ms;
+    }
     /* ========== JADWAL ACARA ========== */
 
     .section-schedule {
@@ -665,6 +729,7 @@
       border-radius: 999px;
       border: none;
       font-size: 0.8rem;
+      font-weight: 300;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
@@ -752,6 +817,15 @@
     .gift-card.bni {
       /* SOLID TEAL/GREENISH */
       background: linear-gradient(45deg, #55c7c7, #008080);
+    }
+
+    .bank-logo {
+      display: block;
+      max-width: 90px;      /* Lebar logo */
+      height: auto;
+      padding: 8px 12px;    /* Jarak antara logo dan tepian latar putih */
+      border-radius: 8px;   /* Sudut melengkung */
+      margin-bottom: 1rem;  /* Jarak ke nomor rekening */
     }
 
     .gift-bank-name {
@@ -923,33 +997,38 @@
       Ya Allah semoga ridho-Mu tercurah mengiringi pernikahan kami:
     </p>
 
-    <!-- KONTENER UTAMA PROFIL BARU -->
+<!-- KONTENER UTAMA PROFIL BARU (DENGAN ANIMASI) -->
     <div class="profile-container">
-      <!-- Wrapper untuk foto yang akan di-clip -->
-      <div class="profile-photo-wrapper">
-          <!-- GANTI 'src' DENGAN PATH GAMBAR ANDA (misal: images/couple-card.jpg) -->
+      
+      <!-- 1. Wrapper Foto (Animasi Zoom) -->
+      <div class="profile-photo-wrapper anim-zoom" data-animate>
           <img src="images/couple-card.jpg" alt="Riesa dan Lukman" id="profilePhoto" onerror="this.src='https://placehold.co/600x450/D1B1C8/FFFFFF?text=Foto+Pengantin'">
       </div>
 
       <!-- Wrapper untuk nama dan ampersand -->
       <div class="profile-names-overlay">
-          <!-- Kartu Nama Pria -->
-          <div class="profile-name-card groom" id="groomCard">
-              <span class="intro-name-big">M. Lukmanul Hakim</span>
+          
+          <!-- 2. Kartu Nama Pria (Animasi Masuk dari Kiri - Delay 300ms) -->
+          <div class="profile-name-card groom anim-left" id="groomCard" data-animate data-delay="300ms">
+              <span class="intro-name-big">M. Lukmanul Hakim</span><br>
               <span class="intro-detail">
                   Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
                   (Jl Wilis No.69 Podosugih, Pekalongan Barat)
               </span>
           </div>
 
-          <!-- Simbol & (sekarang disembunyikan via CSS) -->
-          <div class="profile-ampersand" id="profileAmpersand">
-              <img src="https://placehold.co/100x100/F472B6/FFFFFF?text=%26&font=serif" alt="dan" onerror="this.src='https://placehold.co/100x100/F472B6/FFFFFF?text=%26&font=serif'">
+          <!-- 3. Simbol & (Animasi Pop - Delay 500ms) -->
+          <div class="profile-ampersand anim-pop" id="profileAmpersand" data-animate data-delay="500ms">
+              <img 
+                src="images/ampersand.png" 
+                alt="Simbol dan" 
+                onerror="this.src='https://placehold.co/40x40/ff2f92/ffffff?text=%26'"
+              >
           </div>
 
-          <!-- Kartu Nama Wanita -->
-          <div class="profile-name-card bride" id="brideCard">
-              <span class="intro-name-big">Riesa Putri Febriani</span>
+          <!-- 4. Kartu Nama Wanita (Animasi Masuk dari Kanan - Delay 700ms) -->
+          <div class="profile-name-card bride anim-right" id="brideCard" data-animate data-delay="700ms">
+              <span class="intro-name-big">Riesa Putri Febriani</span><br>
               <span class="intro-detail">
                   Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
                   (Gg. Pamsimas, Sapuro Indah, Pekalongan Barat)
@@ -1031,17 +1110,23 @@
           dengan rahmat dan rezeki berlimpah. Aamiin.
         </p>
 
-        <div class="gift-boxes" data-animate data-delay="600ms">
-          <div class="gift-cards">
+    <div class="gift-cards">
+            
+            <!-- KARTU BCA -->
             <div class="gift-card bca">
-              <div class="gift-bank-name">BCA</div>
+              <!-- Ganti Teks dengan Gambar Logo -->
+              <img src="images/BCA.png" alt="Logo BCA" class="bank-logo">
+              
               <div class="gift-bank-no" id="bcaNo">3820145681</div>
               <div class="gift-owner">a.n. Riesa Putri Febriani</div>
               <button class="btn-copy" type="button" data-target="bcaNo" data-info="bcaInfo" data-animate data-delay="300ms">Salin nomor BCA</button>
             </div>
 
+            <!-- KARTU BNI -->
             <div class="gift-card bni">
-              <div class="gift-bank-name">BNI</div>
+              <!-- Ganti Teks dengan Gambar Logo -->
+              <img src="images/BNI.png" alt="Logo BNI" class="bank-logo">
+              
               <div class="gift-bank-no" id="bniNo">0622621535</div>
               <div class="gift-owner">a.n. Lukmanul Hakim</div>
               <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo" data-animate data-delay="500ms">Salin nomor BNI</button>
@@ -1090,9 +1175,7 @@
       }, 520); // match CSS duration
     });
 
-    /* ----- IntersectionObserver for on-scroll entrance with stagger (REVISED) ----- */
-
-/* ----- IntersectionObserver for on-scroll entrance (HYBRID VERSION) ----- */
+    /* ----- IntersectionObserver for on-scroll entrance (HYBRID VERSION) ----- */
 
     const observerOptions = { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0.1 };
 
@@ -1120,101 +1203,11 @@
       });
     }, observerOptions);
 
-    // --- OBSERVER 2: Khusus untuk animasi profil yang bisa berbalik ---
-    const reversibleObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-        } else {
-          entry.target.classList.remove('in-view');
-        }
-      });
-    }, observerOptions);
-
-    // --- OBSERVER 2: Hapus 'reversibleObserver' ---
-    /* const reversibleObserver = new ... (SELURUH BLOK INI DIHAPUS) */
-
     // Jalankan observer sesuai targetnya masing-masing
     document.querySelectorAll('[data-animate], [data-stagger-container]').forEach(node => {
       oneWayObserver.observe(node);
     });
     
-    /* Hapus pemicu untuk 'reversibleObserver' */
-    /* document.querySelectorAll('.profile-container').forEach(node => { ... }); */
-
-
-    /* --- TAMBAHAN: LOGIKA BARU UNTUK SCROLL-DRIVEN ANIMATION ---
-    */
-    
-    // 1. Ambil elemen-elemen yang akan dianimasikan
-    const profileContainer = document.querySelector('.profile-container');
-    const photo = document.getElementById('profilePhoto');
-    const groomCard = document.getElementById('groomCard');
-    const brideCard = document.getElementById('brideCard');
-
-    // 2. Buat fungsi untuk mengupdate animasi berdasarkan progres scroll
-    function updateAnimation(progress) {
-      // Pastikan elemen ada
-      if (!photo || !groomCard || !brideCard) return;
-
-      // progress akan bernilai 0 (awal) sampai 1 (akhir)
-      
-      // Bagian 1: Animasi Nama Pria (Progres 0 -> 0.5)
-      // map 'progress' 0-0.5 menjadi 'priaProgress' 0-1
-      const priaProgress = Math.min(1, progress / 0.5); 
-      
-      // Bagian 2: Animasi Foto & Wanita (Progres 0.5 -> 1)
-      // map 'progress' 0.5-1 menjadi 'wanitaProgress' 0-1
-      const wanitaProgress = Math.max(0, (progress - 0.5) / 0.5);
-
-      // Terapkan animasi Nama Pria
-      // Muncul (0 -> 1), lalu Hilang (1 -> 0)
-      const groomOpacity = Math.max(0, priaProgress - wanitaProgress);
-      groomCard.style.opacity = groomOpacity;
-      // Bergerak (dari -40px ke 0px), lalu (dari 0px ke -40px lagi)
-      groomCard.style.transform = `translateX(${-40 + (priaProgress * 40) - (wanitaProgress * 40)}px)`;
-
-      // Terapkan animasi Foto
-      // Diam (0% -> 50%), lalu Bergerak (50% -> 100%)
-      photo.style.transform = `translateX(${-(wanitaProgress * 33.33)}%)`;
-
-      // Terapkan animasi Nama Wanita
-      // Diam & Sembunyi (0% -> 50%), lalu Muncul (50% -> 100%)
-      brideCard.style.opacity = wanitaProgress;
-      // Bergerak (dari 40px ke 0px)
-      brideCard.style.transform = `translateX(${40 - (wanitaProgress * 40)}px)`;
-    }
-
-    // 3. Buat fungsi 'listener' yang dipanggil setiap kali user scroll
-    function handleProfileScroll() {
-      if (!profileContainer) return;
-
-      const rect = profileContainer.getBoundingClientRect();
-      const vh = window.innerHeight;
-
-      // Tentukan kapan animasi dimulai dan berakhir
-      // Mulai: Saat bagian atas kontainer 80% dari bawah layar
-      const startOffset = vh * 0.8;
-      // Selesai: Saat bagian atas kontainer 20% dari atas layar
-      const endOffset = vh * 0.2;
-      
-      const totalDistance = startOffset - endOffset;
-      const currentPosition = rect.top;
-
-      // Hitung progres (0 saat di 'start', 1 saat di 'end')
-      let progress = (startOffset - currentPosition) / totalDistance;
-      // Batasi progres antara 0 dan 1
-      progress = Math.max(0, Math.min(1, progress));
-
-      // Panggil fungsi update dengan nilai progres
-      updateAnimation(progress);
-    }
-
-    // 4. Tambahkan listener ke window
-    window.addEventListener('scroll', handleProfileScroll);
-    // Panggil sekali di awal untuk mengatur posisi
-    handleProfileScroll();
-
     // copy rekening
     const copyButtons = document.querySelectorAll(".btn-copy");
 
@@ -1237,7 +1230,18 @@
             }
           })
           .catch(() => {
-            alert("Gagal menyalin nomor rekening. Silakan salin manual.");
+            // Fallback jika gagal (hindari alert)
+            console.error("Gagal menyalin. Coba salin manual.");
+            if (infoEl) {
+              infoEl.textContent = "Gagal menyalin";
+              infoEl.style.color = "red";
+              infoEl.style.display = "block";
+              setTimeout(() => {
+                infoEl.textContent = "Nomor tersalin ✔"; // Reset
+                infoEl.style.color = "#2f7a2f"; // Reset
+                infoEl.style.display = "none";
+              }, 2000);
+            }
           });
       });
     });
@@ -1251,7 +1255,9 @@
 
       if (diff <= 0) {
         document.getElementById("countdown").innerHTML =
-          "<p style='color:#fff;font-size:0.9rem;'>Acara sedang berlangsung / telah selesai 💐</p>";
+          "<p style='color:#111;font-size:0.9rem;'>Acara sedang berlangsung / telah selesai 💐</p>";
+        // Hentikan interval
+        if (countdownInterval) clearInterval(countdownInterval);
         return;
       }
 
@@ -1270,8 +1276,8 @@
       document.getElementById("cd-secs").textContent   = String(secs).padStart(2,"0");
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown(); // Panggil sekali saat load
     
   </script>
 </body>
