@@ -280,29 +280,40 @@
 
     /* ========== HERO FOTO TANGGA ========== */
 
+/* ========== HERO FOTO UTUH (ANTI CROP) ========== */
+
     .hero {
       position: relative;
-      min-height: 640px;
-      width:  100%
+      width: 100%;
+      /* Hapus min-height agar tinggi box mengikuti tinggi foto asli */
       overflow: hidden;
+      line-height: 0; /* Menghapus celah putih kecil di bawah gambar */
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: url("images/hero-stairs.png") bottom center/cover no-repeat;
-      width: 98%; /* Memastikan gambar tidak melebihi lebar kontainernya */
-      height: 100%;    /* Menjaga aspek rasio (proporsi) gambar secara otomatis */
+    /* Class baru untuk gambar asli */
+    .hero-real-img {
+      width: 100%;       /* Lebar mentok layar */
+      height: auto;      /* Tinggi menyesuaikan foto (agar proporsional/tidak gepeng) */
+      display: block;
+      object-fit: contain;
     }
 
+    /* Konten (Teks) dibuat mengambang di atas foto */
     .hero-content {
-      position: relative;
-      padding: 1.8rem 1.3rem 2.4rem;
+      position: absolute; /* KUNCI: Agar teks menimpa foto */
+      top: 0;
+      left: 0;
+      width: 100%;
       height: 100%;
+      
+      /* Styling konten tetap sama */
+      padding: 1.8rem 1.3rem 2.4rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       color: #fff;
+      z-index: 10; /* Pastikan teks di atas gambar */
+      line-height: 1.5; /* Kembalikan line-height normal untuk teks */
     }
 
     .hero-tag {
@@ -970,7 +981,7 @@
 
       <!-- HERO -->
       <section class="hero">
-        <div class="hero-bg"></div>
+        <img src="images/hero-stairs.png" alt="Foto Prewedding" class="hero-real-img">
         <div class="hero-corner"></div>
 
         <div class="hero-content">
