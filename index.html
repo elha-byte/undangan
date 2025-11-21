@@ -283,16 +283,16 @@
     .hero {
       position: relative;
       min-height: 640px;
+      width:  100%
       overflow: hidden;
     }
 
     .hero-bg {
       position: absolute;
       inset: 0;
-      background: url("images/hero-stairs.png") bottom center/contain no-repeat;
+      background: url("images/hero-stairs.png") bottom center/cover no-repeat;
       width: 100%; /* Memastikan gambar tidak melebihi lebar kontainernya */
       height: 100%;    /* Menjaga aspek rasio (proporsi) gambar secara otomatis */
-      background: #1111
     }
 
     .hero-content {
@@ -451,7 +451,6 @@
       max-width: 420px;
       width: 100%;
       border-radius: 1rem;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
     .intro-bismi {
@@ -824,9 +823,8 @@
       display: block;
       max-width: 90px;      /* Lebar logo */
       height: auto;
-      padding: 8px 12px;    /* Jarak antara logo dan tepian latar putih */
-      border-radius: 8px;   /* Sudut melengkung */
-      margin-bottom: 0.5rem;  /* Jarak ke nomor rekening */
+      padding: 8px 3px;    /* Jarak antara logo dan tepian latar putih */
+      margin-bottom: 0.1rem;  /* Jarak ke nomor rekening */
     }
 
     .gift-bank-name {
@@ -952,11 +950,11 @@
         </div>
 
         <!-- overlay save the date + tanggal, nempel di foto, posisinya di bawah -->
-        <div class="hero-save" data-animate data-delay="600ms">
+        <div class="hero-save" data-animate data-delay="1200ms">
           SAVE<br>THE<br>DATE
         </div>
 
-        <div class="hero-date-block" data-animate data-delay="700ms">
+        <div class="hero-date-block" data-animate data-delay="1200ms">
           <span>12.</span>
           <span>12.</span>
           <span>2025.</span>
@@ -1010,7 +1008,7 @@
       <div class="profile-names-overlay">
           
           <!-- 2. Kartu Nama Pria (Animasi Masuk dari Kiri - Delay 300ms) -->
-          <div class="profile-name-card groom anim-left" id="groomCard" data-animate data-delay="300ms">
+          <div class="profile-name-card groom anim-left" id="groomCard" data-animate data-delay="1200ms">
               <span class="intro-name-big">M. Lukmanul Hakim</span><br>
               <span class="intro-detail">
                   Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
@@ -1019,7 +1017,7 @@
           </div>
 
           <!-- 3. Simbol & (Animasi Pop - Delay 500ms) -->
-          <div class="profile-ampersand anim-pop" id="profileAmpersand" data-animate data-delay="500ms">
+          <div class="profile-ampersand anim-pop" id="profileAmpersand" data-animate data-delay="1300ms">
               <img 
                 src="images/ampersand.png" 
                 alt="Simbol dan" 
@@ -1028,7 +1026,7 @@
           </div>
 
           <!-- 4. Kartu Nama Wanita (Animasi Masuk dari Kanan - Delay 700ms) -->
-          <div class="profile-name-card bride anim-right" id="brideCard" data-animate data-delay="700ms">
+          <div class="profile-name-card bride anim-right" id="brideCard" data-animate data-delay="1500ms">
               <span class="intro-name-big">Riesa Putri Febriani</span><br>
               <span class="intro-detail">
                   Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
@@ -1137,7 +1135,7 @@
               <img src="images/BNI.png" alt="Logo BNI" class="bank-logo">
               
               <div class="gift-bank-no" id="bniNo">0622621535</div>
-              <div class="gift-owner">a.n. Lukmanul Hakim</div>
+              <div class="gift-owner">a.n. M Lukmanul Hakim</div>
               <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo" data-animate data-delay="500ms">Salin nomor BNI</button>
             </div>
           </div>
@@ -1153,7 +1151,7 @@
       <!-- THANKS -->
       <section class="section-thanks" data-stagger-container>
         <div class="thanks-title" data-animate>Thanks You</div>
-        <p class="thanks-text" data-animate data-delay="100ms">
+        <p class="thanks-text" data-animate data-delay="800ms">
           Terima kasih telah mengambil keputusan hadir dan memberikan doa di pernikahan kami.
         </p>
         <div class="footer" data-animate data-delay="200ms">
