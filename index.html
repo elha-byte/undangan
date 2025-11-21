@@ -517,7 +517,7 @@
       flex-direction: column;
       /* GAP LAMA: gap: 1rem; */ 
       gap: 0.6rem; /* Kurangi gap agar lebih rapat */
-      margin-top: -3.5rem; /* Tarik ke atas agar menimpa foto */
+      margin-top: -2rem; /* Tarik ke atas agar menimpa foto */
       align-items: center; /* Tengahkan kartu */
       padding: 0 0.5rem;
     }
@@ -553,7 +553,8 @@
       /* --- PERUBAHAN: Dibuat statis --- */
       text-align: center;
       opacity: 1;
-      transform: none; 
+      transform: none;
+      margin-top : -1.5 rem; 
     }
     
     /* Container Simbol */
@@ -598,51 +599,70 @@
       margin-top: 0.3rem;
       color: #555;
     }
- @keyframes zoomInSoft {
-      from { opacity: 0; transform: scale(0.85); }
-      to   { opacity: 1; transform: scale(1); }
+
+/* ========== FIX FINAL: TEKNIK TRANSISI (PASTI MUNCUL) ========== */
+
+    /* 1. POSISI AWAL (Sebelum di-scroll) */
+    /* Kartu Pria: Sembunyi di Kiri */
+    .anim-left[data-animate] {
+      opacity: 0;
+      transform: translateX(-50px); /* Geser ke kiri 50px */
+      transition: none; /* Matikan transisi saat loading awal */
     }
 
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-50px); }
-      to   { opacity: 1; transform: translateX(0); }
+    /* Kartu Wanita: Sembunyi di Kanan */
+    .anim-right[data-animate] {
+      opacity: 0;
+      transform: translateX(50px); /* Geser ke kanan 50px */
+      transition: none;
     }
 
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(50px); }
-      to   { opacity: 1; transform: translateX(0); }
+    /* Simbol Ampersand: Kecil */
+    .anim-pop[data-animate] {
+      opacity: 0;
+      transform: scale(0);
+      transition: none;
+    }
+    
+    /* Foto: Kecil */
+    .anim-zoom[data-animate] {
+      opacity: 0;
+      transform: scale(0.9);
+      transition: none;
     }
 
-    @keyframes popRotate {
-      0%   { opacity: 0; transform: scale(0) rotate(-45deg); }
-      60%  { transform: scale(1.2) rotate(10deg); }
-      100% { opacity: 1; transform: scale(1) rotate(0); }
-    }
-
-    /* Class untuk menimpa animasi default (fadeUp) */
-    /* Animasi Foto */
-    .anim-zoom[data-animate].in-view {
-      animation-name: zoomInSoft;
-      animation-duration: 800ms;
-    }
-
-    /* Animasi Kartu Pria (Groom) */
+    /* 2. POSISI AKHIR (Saat Masuk Layar / in-view) */
+    /* Perintah: "Kembali ke posisi normal (0) dengan gerakan lambat (1.2 detik)" */
+    
     .anim-left[data-animate].in-view {
-      animation-name: slideInLeft;
-      animation-duration: 700ms;
+      opacity: 1;
+      transform: translateX(0);
+      /* Logic Smooth: Ease Out Quart (Cepat lalu melambat elegan) */
+      transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 1.2s ease;
+      transition-delay: 0.2s; /* Delay sedikit biar foto muncul duluan */
     }
 
-    /* Animasi Kartu Wanita (Bride) */
     .anim-right[data-animate].in-view {
-      animation-name: slideInRight;
-      animation-duration: 700ms;
+      opacity: 1;
+      transform: translateX(0);
+      transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 1.2s ease;
+      transition-delay: 0.6s; /* Muncul belakangan setelah pria */
+    }
+    
+    .anim-pop[data-animate].in-view {
+      opacity: 1;
+      transform: scale(1);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease; 
+      transition-delay: 0.4s; /* Muncul di tengah-tengah */
     }
 
-    /* Animasi Simbol & */
-    .anim-pop[data-animate].in-view {
-      animation-name: popRotate;
-      animation-duration: 600ms;
+    .anim-zoom[data-animate].in-view {
+      opacity: 1;
+      transform: scale(1);
+      transition: transform 1s ease-out, opacity 1s ease;
+      transition-delay: 0s;
     }
+        
     /* ========== JADWAL ACARA ========== */
 
     .section-schedule {
@@ -739,27 +759,40 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    /* ========== GALERI ========== */
-
-    .section-gallery {
-      padding: 2.2rem 1rem 2.4rem;
-      /* Background PINK SOLID */
-      background: #fcc5d2;
-    }
+/* ========== GALERI (MASONRY LAYOUT) ========== */
 
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 0.15rem;
-      border-radius: 0.6rem;
-      overflow: hidden;
-      box-shadow: 0 14px 26px rgba(0,0,0,0.22);
+      /* Menggunakan sistem kolom, bukan grid kotak */
+      display: block;
+      column-count: 2;    /* Menampilkan 2 kolom (bagus untuk HP) */
+      column-gap: 0.5rem; /* Jarak antar kolom (kiri-kanan) */
+      
+      /* Reset style lama */
+      border-radius: 0;
+      box-shadow: none;
+      overflow: visible;
     }
 
     .gallery-grid img {
+      display: block;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto !important; /* KUNCI: Tinggi menyesuaikan rasio asli foto */
+      object-fit: contain;     /* Memastikan foto utuh */
+      
+      margin-bottom: 0.5rem;   /* Jarak antar foto (atas-bawah) */
+      border-radius: 0.5rem;   /* Sudut melengkung sedikit */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Bayangan halus per foto */
+      
+      /* Mencegah foto terbelah di antara dua kolom */
+      break-inside: avoid; 
+      -webkit-column-break-inside: avoid;
+    }
+    
+    /* Opsional: Untuk layar PC/Tablet lebar, jadi 3 kolom */
+    @media (min-width: 768px) {
+      .gallery-grid {
+        column-count: 3;
+      }
     }
 
     /* ========== GIFT / AMBLOP DIGITAL ========== */
@@ -901,6 +934,7 @@
       opacity: 0.9;
       color: #111;
     }
+
   </style>
 </head>
 <body>
