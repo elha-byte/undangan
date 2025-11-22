@@ -805,6 +805,39 @@
         column-count: 3;
       }
     }
+/* ========== VIDEO YOUTUBE RESPONSIF ========== */
+    .section-video {
+      padding: 0 1.5rem 2rem; /* Jarak aman */
+      background: #fcc5d2;    /* Samakan dengan background body */
+      text-align: center;
+    }
+    
+    .video-title {
+      font-family: "Bintaro", cursive;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #111;
+    }
+
+    /* Wadah agar video rasio 16:9 rapi di HP */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* Rasio 16:9 (Standar Youtube) */
+      height: 0;
+      overflow: hidden;
+      border-radius: 1rem; /* Sudut melengkung */
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      background: #000;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
 
     /* ========== GIFT / AMBLOP DIGITAL ========== */
 
@@ -1149,6 +1182,21 @@
           <img src="images/gallery-4.jpg" alt="" data-animate>
           <img src="images/gallery-5.jpg" alt="" data-animate>
           <img src="images/gallery-6.jpg" alt="" data-animate>
+        </div>
+      </section>
+
+      <!-- [BARU] SECTION VIDEO -->
+      <section class="section-video">
+        <div class="video-title" data-animate>Our Moment</div>
+        
+        <div class="video-wrapper" data-animate>
+          <!-- GANTI 'src' DI BAWAH INI DENGAN LINK EMBED YOUTUBE ANDA -->
+          <!-- Cara dapat link: Buka Youtube > Klik Share > Pilih Embed > Copy link di dalam src="..." -->
+          <iframe 
+            src="https://www.youtube.com/embed/P2uPT-cWcjM?si=D1UPvhSrPEBBLLhm" 
+            title="Video Prewedding" 
+            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+          </iframe>
         </div>
       </section>
 
