@@ -770,24 +770,42 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-/* ========== GALERI (MASONRY LAYOUT) ========== */
+/* ========== GALERI & VIDEO (FINAL FIX) ========== */
+
+    /* 1. CONTAINER UTAMA (Memberi Jarak Kiri-Kanan) */
+    .section-gallery {
+      /* Atas: 2.2rem | KANAN-KIRI: 2.5rem (Space Lega) | Bawah: 3rem */
+      padding: 2.2rem 2.5rem 3rem;
+      
+      background: #fcc5d2;
+      box-sizing: border-box; 
+    }
+
+    /* Penyesuaian untuk HP Layar Kecil banget */
+    @media (max-width: 400px) {
+      .section-gallery {
+        padding: 2.2rem 1.5rem 3rem; 
+      }
+    }
+
+    /* 2. JUDUL "OUR MOMENT" */
     .gallery-title {
       font-family: "Bintaro", cursive;
-      font-size: 3.5rem;     /* Ukuran besar */
-      text-align: center;    /* Posisi Tengah */
-      margin-bottom: 1.5rem; /* Jarak ke foto */
-      margin-top: 2rem;
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem; /* Jarak judul ke foto */
       color: #111;
       line-height: 1;
     }
 
+    /* 3. GRID FOTO (MASONRY / BATA) */
     .gallery-grid {
-      /* Menggunakan sistem kolom, bukan grid kotak */
       display: block;
-      column-count: 3;    /* Menampilkan 2 kolom (bagus untuk HP) */
-      column-gap: 0.5rem; /* Jarak antar kolom (kiri-kanan) */
+      column-count: 2;    /* DEFAULT: 2 Kolom (Pas untuk HP) */
+      column-gap: 0.8rem; /* Jarak antar kolom */
       
       /* Reset style lama */
+      width: 100%;
       border-radius: 0;
       box-shadow: none;
       overflow: visible;
@@ -796,32 +814,26 @@
     .gallery-grid img {
       display: block;
       width: 100%;
-      height: auto !important; /* KUNCI: Tinggi menyesuaikan rasio asli foto */
-      object-fit: contain;     /* Memastikan foto utuh */
+      height: auto !important; /* Foto sesuai rasio asli */
+      object-fit: contain;
       
-      margin-bottom: 0.5rem;   /* Jarak antar foto (atas-bawah) */
-      border-radius: 0.5rem;   /* Sudut melengkung sedikit */
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Bayangan halus per foto */
+      margin-bottom: 0.8rem;   /* Jarak bawah per foto */
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       
-      /* Mencegah foto terbelah di antara dua kolom */
+      /* Mencegah foto terpotong antar kolom */
       break-inside: avoid; 
       -webkit-column-break-inside: avoid;
     }
     
-    /* Opsional: Untuk layar PC/Tablet lebar, jadi 3 kolom */
+    /* Jika layar lebar (Tablet/PC), baru jadi 3 kolom */
     @media (min-width: 768px) {
       .gallery-grid {
         column-count: 3;
       }
     }
-/* ========== VIDEO YOUTUBE RESPONSIF ========== */
-    .section-video {
-      padding: 2.4rem 1.5rem 2.6rem;
-      background: #fcc5d2;    /* Samakan dengan background body */
-      text-align: center;
-    }
 
-    /* Update Video Wrapper agar ada jarak dari foto di atasnya */
+    /* 4. VIDEO WRAPPER (POSISI DI BAWAH) */
     .video-wrapper {
       position: relative;
       padding-bottom: 56.25%; /* Rasio 16:9 */
@@ -830,7 +842,9 @@
       border-radius: 1rem;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       background: #000;
-      margin-top: 1rem; /* Jarak Jauh dari Foto di atasnya */
+      
+      /* Memberi jarak jauh dari foto terakhir di atasnya */
+      margin-top: 2.5rem; 
     }
 
     .video-wrapper iframe {
@@ -980,6 +994,50 @@
       font-size: 0.75rem;
       opacity: 0.9;
       color: #111;
+    }
+/* ========== TOMBOL MUSIK ========== */
+    .music-control {
+      position: fixed;
+      bottom: 2rem;
+      left: 1.5rem; /* Posisi di Kiri Bawah */
+      width: 50px;
+      height: 50px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999; /* Paling atas */
+      cursor: pointer;
+      border: 2px solid #ff2f92; /* Warna Pinggiran Pink */
+      
+      /* Sembunyikan tombol sebelum undangan dibuka */
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
+    }
+
+    /* Agar tombol muncul setelah amplop dibuka */
+    .music-control.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .music-control svg {
+      width: 24px;
+      height: 24px;
+      color: #ff2f92;
+    }
+
+    /* Animasi Berputar (Saat Musik Nyala) */
+    @keyframes spinMusic {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .music-control.playing {
+      animation: spinMusic 3s linear infinite; /* Putar terus */
     }
 
   </style>
@@ -1177,9 +1235,14 @@
       </section>
 
       <!-- GALERI -->
-           <section class="section-gallery" data-stagger-container>
-         <!-- 1. JUDUL (Di Tengah Atas) -->
+<!-- SECTION GALERI & VIDEO (Menyatu) -->
+      <!-- Perhatikan: Semua konten ada di dalam satu <section> ini -->
+      <section class="section-gallery" data-stagger-container>
+        
+        <!-- 1. JUDUL -->
         <div class="gallery-title" data-animate>Our Moment</div>
+
+        <!-- 2. GRID FOTO -->
         <div class="gallery-grid">
           <img src="images/gallery-1.jpg" alt="" data-animate>
           <img src="images/gallery-2.jpg" alt="" data-animate>
@@ -1187,18 +1250,18 @@
           <img src="images/gallery-4.jpg" alt="" data-animate>
           <img src="images/gallery-5.jpg" alt="" data-animate>
           <img src="images/gallery-6.jpg" alt="" data-animate>
+          <img src="images/gallery-7.jpg" alt="" data-animate>
+          <img src="images/gallery-8.jpg" alt="" data-animate>
         </div>
-      </section>
 
-      <!-- [BARU] SECTION VIDEO -->
-      <section class="section-video"></section>
+        <!-- 3. VIDEO -->
+        <!-- Letaknya DI SINI (Sebelum penutup section) agar kena spasi kiri-kanan -->
         <div class="video-wrapper" data-animate>
-          <!-- GANTI 'src' DI BAWAH INI DENGAN LINK EMBED YOUTUBE ANDA -->
-          <!-- Cara dapat link: Buka Youtube > Klik Share > Pilih Embed > Copy link di dalam src="..." -->
           <iframe 
             src="https://www.youtube.com/embed/P2uPT-cWcjM?si=D1UPvhSrPEBBLLhm" 
             title="Video Prewedding" 
-            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
           </iframe>
         </div>
       </section>
@@ -1254,9 +1317,24 @@
           &copy; 2025 — Riesa &amp; Lukman
         </div>
       </section>
-
     </div>
   </main>
+<!-- ========== FITUR AUDIO BACKSOUND ========== -->
+  
+  <!-- File Audio (Ganti 'musik.mp3' dengan nama file Anda) -->
+  <audio id="bgAudio" loop>
+    <source src="Payung Teduh - Akad (Guitar Instrumental).mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Tombol Musik Melayang -->
+  <div class="music-control" id="musicBtn">
+    <!-- Ikon Vinyl / Musik (SVG) -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18V5l12-2v13"></path>
+      <circle cx="6" cy="18" r="3"></circle>
+      <circle cx="18" cy="16" r="3"></circle>
+    </svg>
+  </div>
 
   <script>
     // buka amplop
@@ -1264,18 +1342,48 @@
     const envelope = document.querySelector('.envelope-card');
     const gateScreenEl = document.getElementById('gateScreen');
     const mainPageEl = document.getElementById('mainPage');
+    
+    // --- TAMBAHAN VARIABEL AUDIO ---
+    const audioEl = document.getElementById('bgAudio');
+    const musicBtn = document.getElementById('musicBtn');
+    let isPlaying = false;
 
+    // FUNGSI UNTUK TOMBOL MUSIK (PAUSE/PLAY)
+    musicBtn.addEventListener('click', function() {
+      if (isPlaying) {
+        audioEl.pause();
+        musicBtn.classList.remove('playing'); // Stop putar ikon
+      } else {
+        audioEl.play();
+        musicBtn.classList.add('playing');    // Mulai putar ikon
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // FUNGSI BUKA AMPLOP (SEKALIGUS NYALAKAN MUSIK)
     document.getElementById('envelopeOpen').addEventListener('click', () => {
-      // animate flap + shrink envelope
+      // 1. Animasi Amplop
       envelope.classList.add('open');
 
-      // wait animation then hide gate and show page
+      // 2. NYALAKAN MUSIK OTOMATIS
+      audioEl.play().then(() => {
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+      }).catch(error => {
+        console.log("Autoplay dicegah browser, perlu interaksi lagi.");
+      });
+
+      // 3. Tampilkan Tombol Musik
+      setTimeout(() => {
+         musicBtn.classList.add('show');
+      }, 800);
+
+      // 4. Buka Halaman Utama
       setTimeout(() => {
        gateScreenEl.classList.add('hidden');
         mainPageEl.classList.add('visible');
-        // scroll to top (safety)
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 520); // match CSS duration
+      }, 520); 
     });
 
     /* ----- IntersectionObserver for on-scroll entrance (HYBRID VERSION) ----- */
