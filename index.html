@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Undangan Pernikahan Riesa & Lukman</title>
+  <link rel="icon" type="image/png" href="iconRL.png">
+
+    <link rel="apple-touch-icon" href="iconRL.png">
 
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
@@ -271,7 +274,6 @@
       margin: 0 auto;
       /* Background dihapus, background body yang terlihat */
       background: transparent;
-      box-shadow: 0 0 40px rgba(0,0,0,0.25);
     }
 
     section {
@@ -402,7 +404,6 @@
     .countdown-wrapper {
         background: #fff;
         border-radius: 999px;
-        box-shadow: 0 16px 30px rgba(0,0,0,0.22);
         padding: 0.8rem 1rem;
         position: relative;
         max-width: 360px;
@@ -501,7 +502,6 @@
       border-radius: 1.8rem;
       overflow: hidden; /* Ini kuncinya untuk efek reveal */
       aspect-ratio: 4/3; /* Sesuaikan rasio ini dengan foto Anda */
-      box-shadow: 0 16px 30px rgba(0,0,0,0.18);
       position: relative;
       background: #fff; /* Warna placeholder jika gambar gagal dimuat */
       
@@ -537,7 +537,6 @@
       background: #fff;
       border-radius: 1.4rem;
       padding: 1rem 1.2rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       z-index: 10;
       flex-shrink: 0;
       
@@ -731,7 +730,6 @@
       color: #ffffff;
       border-radius: 1.8rem;
       padding: 1.4rem 1rem 1.6rem;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.22);
     }
 
     .schedule-card-title {
@@ -819,7 +817,6 @@
       
       margin-bottom: 0.8rem;   /* Jarak bawah per foto */
       border-radius: 0.5rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
       
       /* Mencegah foto terpotong antar kolom */
       break-inside: avoid; 
@@ -840,7 +837,6 @@
       height: 0;
       overflow: hidden;
       border-radius: 1rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       background: #000;
       
       /* Memberi jarak jauh dari foto terakhir di atasnya */
@@ -855,6 +851,96 @@
       height: 100%;
       border: 0;
     }
+
+    /* ========== BUKU TAMU / UCAPAN ========== */
+    .section-wishes {
+      padding: 2.2rem 1.5rem 3rem;
+      background: #fcc5d2;
+      text-align: center;
+    }
+
+    .wishes-container {
+      background: #fff;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      max-width: 500px; /* Lebar maksimal agar rapi */
+      margin: 0 auto;
+    }
+
+    .wishes-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .form-group input, 
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 0.5rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #f9f9f9;
+    }
+    
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn-send {
+      background: linear-gradient(45deg, #ff7a5c, #ff2f92);
+      color: #fff;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: opacity 0.3s;
+    }
+    .btn-send:hover { opacity: 0.9; }
+
+    /* List Komentar (Dummy) */
+    .wishes-list {
+      text-align: left;
+      max-height: 300px;
+      overflow-y: auto; /* Bisa discroll kalau panjang */
+      border-top: 2px dashed #eee;
+      padding-top: 1rem;
+    }
+
+    .wish-item {
+      background: #fff0f5; /* Pink sangat muda */
+      padding: 0.8rem;
+      border-radius: 0.5rem;
+      margin-bottom: 0.8rem;
+      border-left: 3px solid #ff2f92;
+    }
+    
+    .wish-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+    
+    .wish-name { font-weight: 700; font-size: 0.9rem; color: #333; }
+    .wish-date { font-size: 0.7rem; color: #888; }
+    
+    .wish-body { font-size: 0.85rem; color: #555; line-height: 1.4; }
+    
+    .status-tag {
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+    .status-hadir { background: #d4edda; color: #155724; }
+    .status-tidak { background: #f8d7da; color: #721c24; }
 
     /* ========== GIFT / AMBLOP DIGITAL ========== */
 
@@ -884,7 +970,6 @@
       background: #fff;
       border-radius: 1.4rem;
       padding: 1.4rem 1.1rem;
-      box-shadow: 0 16px 30px rgba(0,0,0,0.25);
       max-width: 380px;
       margin: 0 auto;
       color: #111;
@@ -1089,11 +1174,11 @@
         </div>
 
         <!-- overlay save the date + tanggal, nempel di foto, posisinya di bawah -->
-        <div class="hero-save" data-animate data-delay="1200ms">
+        <div class="hero-save" data-animate data-delay="8000ms">
           SAVE<br>THE<br>DATE
         </div>
 
-        <div class="hero-date-block" data-animate data-delay="1200ms">
+        <div class="hero-date-block" data-animate data-delay="8000ms">
           <span>12.</span>
           <span>12.</span>
           <span>2025.</span>
@@ -1122,7 +1207,7 @@
             </div>
           </div>
         </div>
-        <button class="btn-primary" type="button" id="btnSaveDate" data-animate data-delay="500ms">
+        <button class="btn-primary" type="button" id="btnSaveDate" data-animate data-delay="8000ms">
           Save The Date
         </button>
       </section>
@@ -1147,7 +1232,7 @@
       <div class="profile-names-overlay">
           
           <!-- 2. Kartu Nama Pria (Animasi Masuk dari Kiri - Delay 300ms) -->
-          <div class="profile-name-card groom anim-left" id="groomCard" data-animate data-delay="1200ms">
+          <div class="profile-name-card groom anim-left" id="groomCard" data-animate data-delay="8000ms">
               <span class="intro-name-big">M. Lukmanul Hakim</span><br>
               <span class="intro-detail">
                   Putra Kedua Bapak M. Nasir &amp; Ibu Choslatinuroh<br>
@@ -1156,7 +1241,7 @@
           </div>
 
           <!-- 3. Simbol & (Animasi Pop - Delay 500ms) -->
-          <div class="profile-ampersand anim-pop" id="profileAmpersand" data-animate data-delay="1300ms">
+          <div class="profile-ampersand anim-pop" id="profileAmpersand" data-animate data-delay="8000ms">
               <img 
                 src="images/ampersand.png" 
                 alt="Simbol dan" 
@@ -1165,7 +1250,7 @@
           </div>
 
           <!-- 4. Kartu Nama Wanita (Animasi Masuk dari Kanan - Delay 700ms) -->
-          <div class="profile-name-card bride anim-right" id="brideCard" data-animate data-delay="1500ms">
+          <div class="profile-name-card bride anim-right" id="brideCard" data-animate data-delay="8000ms">
               <span class="intro-name-big">Riesa Putri Febriani</span><br>
               <span class="intro-detail">
                   Putri Pertama Bapak Surono &amp; Ibu Ernawati<br>
@@ -1265,11 +1350,43 @@
           </iframe>
         </div>
       </section>
+      <!-- SECTION UCAPAN & DOA -->
+      <section class="section-wishes">
+        <div class="gallery-title" data-animate>Wishes</div>
+        
+        <div class="wishes-container" data-animate>
+          
+          <!-- FORM INPUT -->
+<!-- FORM INPUT (SUDAH DISESUAIKAN UNTUK GOOGLE SHEETS) -->
+          <!-- Perhatikan atribut name="Nama", name="Kehadiran", name="Ucapan" -->
+          <form class="wishes-form" id="myWishForm">
+            
+            <div class="form-group">
+              <input type="text" id="nama" name="Nama" placeholder="Nama Anda" required>
+            </div>
+            
+            <div class="form-group">
+              <select id="kehadiran" name="Kehadiran">
+                <option value="Hadir">Hadir</option>
+                <option value="Tidak Hadir">Berhalangan</option>
+                <option value="Masih Ragu">Masih Ragu</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <textarea id="ucapan" name="Ucapan" placeholder="Tuliskan ucapan & doa..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-send" id="btnKirim">Kirim Ucapan</button>
+          </form>
+
+        </div>
+      </section>
 
       <!-- GIFT / AMBLOP DIGITAL -->
       <section class="section-gift" data-stagger-container>
         <div class="gift-title" data-animate>Your Gift to Us</div>
-        <p class="gift-text" data-animate data-delay="700ms">
+        <p class="gift-text" data-animate data-delay="8000ms">
           Kehadiran Bapak/Ibu/Saudara merupakan hadiah terbaik bagi kami.
           Namun jika berkenan memberikan tanda kasih, kami sediakan rekening
           berikut. Semoga keikhlasan, perhatian dan kebaikan akan dibalas
@@ -1285,7 +1402,7 @@
               
               <div class="gift-bank-no" id="bcaNo">3820145681</div>
               <div class="gift-owner">a.n. Riesa Putri Febriani</div>
-              <button class="btn-copy" type="button" data-target="bcaNo" data-info="bcaInfo" data-animate data-delay="300ms">Salin nomor BCA</button>
+              <button class="btn-copy" type="button" data-target="bcaNo" data-info="bcaInfo" data-animate data-delay="1200ms">Salin nomor BCA</button>
             </div>
 
             <!-- KARTU BNI -->
@@ -1295,7 +1412,7 @@
               
               <div class="gift-bank-no" id="bniNo">0622621535</div>
               <div class="gift-owner">a.n. M Lukmanul Hakim</div>
-              <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo" data-animate data-delay="500ms">Salin nomor BNI</button>
+              <button class="btn-copy" type="button" data-target="bniNo" data-info="bniInfo" data-animate data-delay="1200ms">Salin nomor BNI</button>
             </div>
           </div>
 
@@ -1310,10 +1427,10 @@
       <!-- THANKS -->
       <section class="section-thanks" data-stagger-container>
         <div class="thanks-title" data-animate>Thanks You</div>
-        <p class="thanks-text" data-animate data-delay="800ms">
+        <p class="thanks-text" data-animate data-delay="8000ms">
           Terima kasih telah mengambil keputusan hadir dan memberikan doa di pernikahan kami.
         </p>
-        <div class="footer" data-animate data-delay="200ms">
+        <div class="footer" data-animate data-delay="4000ms">
           &copy; 2025 — Riesa &amp; Lukman
         </div>
       </section>
@@ -1384,6 +1501,21 @@
         mainPageEl.classList.add('visible');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 520); 
+    });
+/* ----- AUTO PAUSE SAAT KELUAR TAB / HP DIKUNCI ----- */
+    document.addEventListener("visibilitychange", function() {
+      if (document.hidden) {
+        // Kondisi: Pindah tab, minimize, atau layar hp mati
+        audioEl.pause();
+        musicBtn.classList.remove('playing'); // Stop animasi putar sementara
+      } else {
+        // Kondisi: Balik lagi ke layar undangan
+        // Cek dulu: Apakah user sebelumnya menyalakan musik? (isPlaying == true)
+        if (isPlaying) {
+          audioEl.play();
+          musicBtn.classList.add('playing'); // Lanjut animasi putar
+        }
+      }
     });
 
     /* ----- IntersectionObserver for on-scroll entrance (HYBRID VERSION) ----- */
@@ -1516,7 +1648,70 @@
       // 4. Buka di Tab Baru
       window.open(calendarUrl, '_blank');
     });
-    
+/* ----- KONEKSI KE GOOGLE SHEETS ----- */
+    const wishForm = document.getElementById('myWishForm');
+    const wishesList = document.getElementById('wishesList');
+    const btnKirim = document.getElementById('btnKirim');
+
+    // PASTE URL DARI TAHAP 3 DI ANTARA TANDA KUTIP DI BAWAH INI 👇
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzut80QfTG_zapR4xst85UoO0EuHPC7BxRl216sCEnZkSTnmg1EQYuYZnGGuYbuEBd0/exec'; 
+
+    if (wishForm) {
+      wishForm.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        // 1. Ubah Tombol jadi Loading
+        btnKirim.disabled = true;
+        btnKirim.textContent = "Mengirim...";
+
+        // 2. Kirim Data ke Google Sheets
+        fetch(scriptURL, { method: 'POST', body: new FormData(wishForm)})
+          .then(response => {
+            // 3. Jika Berhasil
+            console.log('Success!', response);
+            
+            // Tampilkan Ucapan di Layar (Biar tamu langsung lihat)
+            tampilkanUcapanBaru();
+            
+            // Reset Form & Tombol
+            wishForm.reset();
+            btnKirim.disabled = false;
+            btnKirim.textContent = "Kirim Ucapan";
+            alert("Terima kasih! Ucapan Anda berhasil tersimpan.");
+          })
+          .catch(error => {
+            console.error('Error!', error.message);
+            btnKirim.disabled = false;
+            btnKirim.textContent = "Kirim Ucapan";
+            alert("Gagal mengirim. Coba lagi ya.");
+          });
+      });
+    }
+
+    // Fungsi Visual (Menampilkan apa yang baru diketik)
+    function tampilkanUcapanBaru() {
+        const nama = document.getElementById('nama').value;
+        const status = document.getElementById('kehadiran').value;
+        const ucapan = document.getElementById('ucapan').value;
+        
+        let statusClass = 'status-hadir';
+        if (status === 'Tidak Hadir') statusClass = 'status-tidak';
+
+        const newWish = document.createElement('div');
+        newWish.className = 'wish-item';
+        newWish.innerHTML = `
+          <div class="wish-header">
+            <div>
+              <span class="wish-name">${nama}</span>
+              <span class="status-tag ${statusClass}">${status}</span>
+            </div>
+            <span class="wish-date">Baru saja</span>
+          </div>
+          <div class="wish-body">${ucapan}</div>
+        `;
+        wishesList.prepend(newWish);
+    }
+
   </script>
 </body>
 </html>
