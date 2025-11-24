@@ -1648,124 +1648,101 @@
       // 4. Buka di Tab Baru
       window.open(calendarUrl, '_blank');
     });
-/* ----- KONEKSI KE GOOGLE SHEETS ----- */
+/* ----- KONEKSI VIA SHEETDB.IO (LEBIH MUDAH) ----- */
+    
+    // GANTI LINK DI BAWAH INI DENGAN API URL DARI SHEETDB ANDA 👇
+    const apiURL = 'https://sheetdb.io/api/v1/ftyl99zq2x6il'; 
+
     const wishForm = document.getElementById('myWishForm');
     const wishesList = document.getElementById('wishesList');
     const btnKirim = document.getElementById('btnKirim');
 
-    // PASTE URL DARI TAHAP 3 DI ANTARA TANDA KUTIP DI BAWAH INI 👇
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzut80QfTG_zapR4xst85UoO0EuHPC7BxRl216sCEnZkSTnmg1EQYuYZnGGuYbuEBd0/exec'; 
-
+    // 1. FUNGSI KIRIM DATA (POST)
     if (wishForm) {
       wishForm.addEventListener('submit', e => {
         e.preventDefault();
         
-        // 1. Ubah Tombol jadi Loading
         btnKirim.disabled = true;
         btnKirim.textContent = "Mengirim...";
 
-        // 2. Kirim Data ke Google Sheets
-        fetch(scriptURL, { method: 'POST', body: new FormData(wishForm)})
-          .then(response => {
-            // 3. Jika Berhasil
-            console.log('Success!', response);
-            
-            // Tampilkan Ucapan di Layar (Biar tamu langsung lihat)
-            tampilkanUcapanBaru();
-            
-            // Reset Form & Tombol
-            wishForm.reset();
-            btnKirim.disabled = false;
-            btnKirim.textContent = "Kirim Ucapan";
-            alert("Terima kasih! Ucapan Anda berhasil tersimpan.");
+        // Ambil data form
+        const formData = new FormData(wishForm);
+        // Ubah ke format JSON yang diminta SheetDB
+        const data = {};
+        formData.forEach((value, key) => data[key] = value);
+        // Tambah waktu manual
+        data['Waktu'] = new Date().toString();
+
+        fetch(apiURL, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: data })
+        })
+          .then(response => response.json())
+          .then(result => {
+             // Tampilkan manual biar cepat
+             tampilkanUcapanBaru(data.Nama, data.Kehadiran, data.Ucapan);
+             
+             wishForm.reset();
+             btnKirim.disabled = false;
+             btnKirim.textContent = "Kirim Ucapan";
+             alert("Terima kasih! Ucapan berhasil dikirim.");
           })
           .catch(error => {
-            console.error('Error!', error.message);
+            console.error(error);
             btnKirim.disabled = false;
             btnKirim.textContent = "Kirim Ucapan";
-            alert("Gagal mengirim. Coba lagi ya.");
+            alert("Gagal kirim. Coba lagi.");
           });
       });
     }
 
-    // Fungsi Visual (Menampilkan apa yang baru diketik)
-    function tampilkanUcapanBaru() {
-        const nama = document.getElementById('nama').value;
-        const status = document.getElementById('kehadiran').value;
-        const ucapan = document.getElementById('ucapan').value;
-        
+    // 2. FUNGSI AMBIL DATA (GET)
+    window.addEventListener('load', function() {
+      wishesList.innerHTML = '<p style="text-align:center; color:#666; font-size:0.8rem;">Memuat doa & ucapan...</p>';
+      
+      fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            if (!data || data.length === 0) {
+               wishesList.innerHTML = '<p style="text-align:center; color:#666; font-size:0.8rem;">Belum ada ucapan.</p>';
+               return;
+            }
+
+            wishesList.innerHTML = '';
+            // Balik urutan agar yang baru di atas
+            data.reverse();
+
+            data.forEach(row => {
+               // Sesuaikan nama kolom dengan di Google Sheet (Case Sensitive!)
+               tampilkanUcapanBaru(row.Nama, row.Kehadiran, row.Ucapan);
+            });
+        })
+        .catch(err => {
+           wishesList.innerHTML = '<p style="text-align:center; color:red; font-size:0.8rem;">Gagal memuat data.</p>';
+        });
+    });
+
+    // Helper Function untuk buat HTML
+    function tampilkanUcapanBaru(nama, status, ucapan) {
         let statusClass = 'status-hadir';
         if (status === 'Tidak Hadir') statusClass = 'status-tidak';
-
-        const newWish = document.createElement('div');
-        newWish.className = 'wish-item';
-        newWish.innerHTML = `
+        
+        const div = document.createElement('div');
+        div.className = 'wish-item';
+        div.innerHTML = `
           <div class="wish-header">
             <div>
               <span class="wish-name">${nama}</span>
               <span class="status-tag ${statusClass}">${status}</span>
             </div>
-            <span class="wish-date">Baru saja</span>
           </div>
           <div class="wish-body">${ucapan}</div>
         `;
-        wishesList.prepend(newWish);
-    }
-    /* ----- LOAD DATA DARI GOOGLE SHEETS ----- */
-    
-    // Panggil fungsi ini saat halaman dimuat
-    window.addEventListener('load', loadWishes);
-
-    function loadWishes() {
-      // Kosongkan daftar dummy (agar tidak dobel)
-      wishesList.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#666;">Memuat ucapan...</p>';
-
-      fetch(scriptURL) // Menggunakan URL Script yang sama
-        .then(response => response.json())
-        .then(data => {
-          // Jika data kosong
-          if (data.length === 0) {
-            wishesList.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#666;">Belum ada ucapan. Jadilah yang pertama!</p>';
-            return;
-          }
-
-          // Bersihkan loading text
-          wishesList.innerHTML = '';
-
-          // Balik urutan (Terbaru di atas)
-          data.reverse(); 
-
-          // Loop setiap data dan buat elemen HTML
-          data.forEach(row => {
-            const nama = row.Nama;
-            const status = row.Kehadiran;
-            const ucapan = row.Ucapan;
-            
-            // Cek Status untuk warna
-            let statusClass = 'status-hadir';
-            if (status === 'Tidak Hadir') statusClass = 'status-tidak';
-            else if (status === 'Masih Ragu') statusClass = 'status-tidak'; // Bisa disesuaikan
-
-            // Buat elemen
-            const newWish = document.createElement('div');
-            newWish.className = 'wish-item';
-            newWish.innerHTML = `
-              <div class="wish-header">
-                <div>
-                  <span class="wish-name">${nama}</span>
-                  <span class="status-tag ${statusClass}">${status}</span>
-                </div>
-              </div>
-              <div class="wish-body">${ucapan}</div>
-            `;
-            
-            wishesList.appendChild(newWish);
-          });
-        })
-        .catch(error => {
-          console.error('Gagal mengambil data:', error);
-          wishesList.innerHTML = '<p style="text-align:center; color:red;">Gagal memuat ucapan.</p>';
-        });
+        wishesList.prepend(div); // Atau appendChild jika data load dari server
     }
 
   </script>
