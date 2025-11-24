@@ -257,6 +257,31 @@
       .envelope-body { padding: 2.2rem 2rem 1.8rem; }
       .envelope-names { font-size: 1.8rem; }
     }
+    /* ========== NAMA TAMU DI AMPLOP ========== */
+    .envelope-guest-area {
+      margin-top: 1.5rem;
+      border-top: 1px dashed #ddd; /* Garis pemisah tipis */
+      padding-top: 1rem;
+    }
+
+    .guest-label {
+      font-size: 0.75rem;
+      color: #666;
+      margin-bottom: 0.3rem;
+      font-family: "Montserrat", sans-serif; /* Font biasa agar terbaca */
+    }
+
+    .guest-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #111;
+      text-transform: capitalize; /* Huruf depan otomatis besar */
+      line-height: 1.3;
+      font-family: "Playfair Display", serif; /* Font elegan */
+      
+      /* Biar kalau namanya panjang tidak nabrak */
+      word-wrap: break-word; 
+    }
 
     /* ========== PAGE WRAPPER ========== */
 
@@ -1142,7 +1167,12 @@
         <div class="envelope-body">
           <div class="envelope-top-row">
             <span class="envelope-date">12/12/25</span>
-            <span class="envelope-turut">Turut Mengundang :</span>
+                      <!-- [BARU] Tempat Nama Tamu -->
+          <div class="envelope-guest-area">
+            <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
+            <div class="guest-name" id="namaTamu">Tamu Undangan</div>
+          </div>
+        </div>
           </div>
           <div class="envelope-names">
             <span>Riesa &amp;</span>
@@ -1747,6 +1777,27 @@
         `;
         wishesList.prepend(div); // Atau appendChild jika data load dari server
     }
+    /* ----- FITUR NAMA TAMU (URL PARAMETER) ----- */
+    window.addEventListener('load', function() {
+      // 1. Ambil parameter dari URL browser
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // 2. Cari kata kunci 'to' ATAU 'kepada' (case insensitive)
+      // Contoh: ?to=Budi Santoso  ATAU  ?kepada=Siti Aminah
+      const nama = urlParams.get('to') || urlParams.get('kepada');
+      
+      // 3. Jika ada nama, masukkan ke HTML
+      if (nama) {
+        // Gunakan textContent untuk keamanan (mencegah script injection)
+        document.getElementById('namaTamu').textContent = nama;
+      }
+      
+      // Opsional: Otomatis isi kolom nama di Form Ucapan juga
+      const inputNamaForm = document.getElementById('nama');
+      if (nama && inputNamaForm) {
+        inputNamaForm.value = nama;
+      }
+    });
 
   </script>
 </body>
