@@ -207,8 +207,8 @@
       height: 100%;
     }
     .monogram img {
-      width: 110px;
-      max-width: 60%;
+      width: 140px;
+      max-width: 80%;
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
@@ -217,25 +217,51 @@
     .envelope-body {
       padding: 1.8rem 1.6rem 1.6rem;
     }
-
+/* ========== MODIFIKASI POSISI NAMA TAMU ========== */
+    
     .envelope-top-row {
       display: flex;
       justify-content: space-between;
-      font-size: 0.8rem;
-      color: #555;
+      align-items: flex-start; /* Supaya sejajar di atas */
       margin-bottom: 1.2rem;
     }
+
+    /* Wadah sebelah kanan */
+    .envelope-right-side {
+      text-align: right; /* Rata Kanan */
+      display: flex;
+      flex-direction: column; /* Menurun (Label dulu, baru Nama) */
+      gap: 0.3rem; /* Jarak antara label dan nama */
+      max-width: 60%; /* Batasi lebar agar tidak menabrak tanggal */
+    }
+
+    .envelope-turut {
+      font-weight: 500;
+      color: #666;
+      display: block;
+    }
+
+    /* Style Nama Tamu di Posisi Baru */
+    .guest-name-top {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;      /* Tebal */
+      font-size: 0.95rem;    /* Ukuran pas */
+      color: #111;
+      line-height: 1.2;
+      
+      /* Agar kalau namanya panjang, dia turun ke bawah (tidak melebar) */
+      word-wrap: break-word; 
+      overflow-wrap: break-word;
+    }
+
     .envelope-date {
       letter-spacing: 0.05em;
       font-weight: 500;
-    }
-    .envelope-turut {
-      font-size: 0.7rem;
       text-align: right;
     }
 
     .envelope-names {
-      font-size: 1.5rem;
+      font-size: 1rem;
       color: #333;
       line-height: 1.1;
       font-weight: 700;
@@ -256,27 +282,6 @@
       .monogram img { width: 130px; }
       .envelope-body { padding: 2.2rem 2rem 1.8rem; }
       .envelope-names { font-size: 1.8rem; }
-    }
-    /* ========== NAMA TAMU DI AMPLOP ========== */
-    .envelope-guest-area {
-      margin-top: 1.5rem;
-      padding-top: 1rem;
-    }
-
-    .guest-label {
-      font-size: 0.75rem;
-      color: #666;
-      margin-bottom: 0.3rem;
-      font-family: "Montserrat", sans-serif; /* Font biasa agar terbaca */
-    }
-
-    .guest-name {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #111;
-      text-transform: capitalize; /* Huruf depan otomatis besar */
-      line-height: 1.3;
-      font-family: "Playfair Display", serif; /* Font elegan */
     }
 
     /* ========== PAGE WRAPPER ========== */
@@ -922,6 +927,7 @@
       cursor: pointer;
       font-size: 1rem;
       transition: opacity 0.3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .btn-send:hover { opacity: 0.9; }
 
@@ -940,6 +946,7 @@
       border-radius: 0.5rem;
       margin-bottom: 0.8rem;
       border-left: 3px solid #ff2f92;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .wish-header {
@@ -1161,19 +1168,27 @@
           </div>
         </div>
         <div class="envelope-body">
+          <!-- BARIS ATAS -->
           <div class="envelope-top-row">
-            <span class="envelope-date">12/12/25</span>
-                      <!-- [BARU] Tempat Nama Tamu -->
-          <div class="envelope-guest-area">
-            <div class="guest-label">Kepada Yth. Bapak/Ibu/Saudara/i:</div>
-            <div class="guest-name" id="namaTamu">Tamu Undangan</div>
+            <!-- Kiri: Tanggal -->
+            <span class="envelope-date">12.12.2025</span>
+            
+            <!-- Kanan: Label & Nama Tamu -->
+            <div class="envelope-right-side">
+              <!-- Anda bisa ganti teks ini jadi 'Turut Mengundang' atau 'Kepada Yth:' -->
+              <span class="envelope-turut">Kepada Yth:</span>
+              
+              <!-- Di sinilah nama tamu akan muncul -->
+              <div id="namaTamu" class="guest-name-top">Tamu Undangan</div>
+            </div>
           </div>
-        </div>
-          </div>
+
+          <!-- Nama Pengantin (Tetap sama) -->
           <div class="envelope-names">
             <span>Riesa &amp;</span>
             <span>Lukman</span>
           </div>
+          <!-- HAPUS bagian 'envelope-guest-area' yang tadi saya suruh buat di bawah, karena sudah pindah ke atas -->
         </div>
       </div>
     </div>
