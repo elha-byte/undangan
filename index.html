@@ -1711,6 +1711,62 @@
         `;
         wishesList.prepend(newWish);
     }
+    /* ----- LOAD DATA DARI GOOGLE SHEETS ----- */
+    
+    // Panggil fungsi ini saat halaman dimuat
+    window.addEventListener('load', loadWishes);
+
+    function loadWishes() {
+      // Kosongkan daftar dummy (agar tidak dobel)
+      wishesList.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#666;">Memuat ucapan...</p>';
+
+      fetch(scriptURL) // Menggunakan URL Script yang sama
+        .then(response => response.json())
+        .then(data => {
+          // Jika data kosong
+          if (data.length === 0) {
+            wishesList.innerHTML = '<p style="text-align:center; font-size:0.8rem; color:#666;">Belum ada ucapan. Jadilah yang pertama!</p>';
+            return;
+          }
+
+          // Bersihkan loading text
+          wishesList.innerHTML = '';
+
+          // Balik urutan (Terbaru di atas)
+          data.reverse(); 
+
+          // Loop setiap data dan buat elemen HTML
+          data.forEach(row => {
+            const nama = row.Nama;
+            const status = row.Kehadiran;
+            const ucapan = row.Ucapan;
+            
+            // Cek Status untuk warna
+            let statusClass = 'status-hadir';
+            if (status === 'Tidak Hadir') statusClass = 'status-tidak';
+            else if (status === 'Masih Ragu') statusClass = 'status-tidak'; // Bisa disesuaikan
+
+            // Buat elemen
+            const newWish = document.createElement('div');
+            newWish.className = 'wish-item';
+            newWish.innerHTML = `
+              <div class="wish-header">
+                <div>
+                  <span class="wish-name">${nama}</span>
+                  <span class="status-tag ${statusClass}">${status}</span>
+                </div>
+              </div>
+              <div class="wish-body">${ucapan}</div>
+            `;
+            
+            wishesList.appendChild(newWish);
+          });
+        })
+        .catch(error => {
+          console.error('Gagal mengambil data:', error);
+          wishesList.innerHTML = '<p style="text-align:center; color:red;">Gagal memuat ucapan.</p>';
+        });
+    }
 
   </script>
 </body>
