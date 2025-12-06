@@ -1206,6 +1206,48 @@
     /* Warna Ikon */
     .vendor-btn.ig svg { fill: #C13584; }
     .vendor-btn.wa svg { fill: #25D366; }
+    /* ========== EFEK GRADASI BERKILAU (ANIMATED) ========== */
+
+    /* 1. Definisi Gerakan Gradasi */
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* 2. Terapkan pada elemen-elemen penting */
+    /* Kita gabungkan semua class yang pakai warna Pink-Orange */
+    
+    .envelope-flap,       /* Lidah Amplop */
+    .btn-primary,         /* Tombol Save Date */
+    .schedule-card,       /* Kartu Jadwal */
+    .btn-send,            /* Tombol Kirim Ucapan */
+    .btn-location,       /* Tombol Lokasi (opsional) */
+    .hero-corner {
+      
+      /* Buat background lebih panjang (4 warna) agar bisa jalan */
+      /* Urutan: Orange -> Pink -> Agak Kuning/Terang (Kilau) -> Pink */
+      background: linear-gradient(-45deg, #ff7a5c, #ff2f92, #ff9a8b, #ff5c7f);
+      
+      /* Perbesar ukuran background agar ada ruang untuk digerakkan */
+      background-size: 400% 400%;
+      
+      /* Jalankan animasi selama 6 detik tanpa henti */
+      animation: gradientFlow 6s ease infinite;
+    }
+    
+    /* Khusus Tombol Lokasi (karena dia kecil, kita sesuaikan warnanya biar teks terbaca) */
+    .btn-location {
+       background: linear-gradient(-45deg, #eee, #fff, #ddd, #fff);
+       background-size: 400% 400%;
+       animation: gradientFlow 3s ease infinite; /* Lebih cepat dikit */
+    }
 
   </style>
 </head>
