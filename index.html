@@ -1867,27 +1867,28 @@
         `;
         wishesList.prepend(div); // Atau appendChild jika data load dari server
     }
-    /* ----- FITUR NAMA TAMU (URL PARAMETER) ----- */
-    window.addEventListener('load', function() {
-      // 1. Ambil parameter dari URL browser
+/* ----- FITUR NAMA TAMU (VERSI INSTAN) ----- */
+    // Kita jalankan langsung tanpa menunggu 'load' gambar
+    (function() {
+      // 1. Ambil parameter dari URL
       const urlParams = new URLSearchParams(window.location.search);
-      
-      // 2. Cari kata kunci 'to' ATAU 'kepada' (case insensitive)
-      // Contoh: ?to=Budi Santoso  ATAU  ?kepada=Siti Aminah
       const nama = urlParams.get('to') || urlParams.get('kepada');
       
-      // 3. Jika ada nama, masukkan ke HTML
+      // 2. Jika ada nama di URL, langsung ganti teksnya
       if (nama) {
-        // Gunakan textContent untuk keamanan (mencegah script injection)
-        document.getElementById('namaTamu').textContent = nama;
+        // Ganti nama di Amplop
+        const namaTamuEl = document.getElementById('namaTamu');
+        if (namaTamuEl) {
+          namaTamuEl.textContent = nama;
+        }
+
+        // Ganti nama di Form Ucapan (bawah) juga jika ada
+        const inputNamaForm = document.getElementById('nama');
+        if (inputNamaForm) {
+          inputNamaForm.value = nama;
+        }
       }
-      
-      // Opsional: Otomatis isi kolom nama di Form Ucapan juga
-      const inputNamaForm = document.getElementById('nama');
-      if (nama && inputNamaForm) {
-        inputNamaForm.value = nama;
-      }
-    });
+    })();
 
   </script>
 </body>
